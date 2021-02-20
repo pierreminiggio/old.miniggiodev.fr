@@ -33,6 +33,9 @@ $likes = array_map(fn (array $entry) => [
         ->createQuery('social__youtube')
         ->select('id', 'youtubeid', 'title', 'channel_id')
         ->where('channel_id IS NOT NULL AND videoed_at IS NULL')
+        ->orderBy('created_at ASC')
 ));
-var_dump($likes);
+
+http_response_code(200);
+echo json_encode($likes);
 exit;
