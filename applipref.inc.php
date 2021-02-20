@@ -1,0 +1,7 @@
+<p>L'application que j'ai développé durant mon stage de fin de DUT permet aux employés de la préfecture d'Avignon de commander des fournitures de bureau. À l'origine, les missions principales associées à mon stage à la préfecture d'Avignon étaient le déploiement d'ordinateurs pour les nouveaux utilisateurs et une fonction de support utilisateur pour répondre à leurs besoins.</p>
+<p>Mais lors de ma présence à la préfecture, le service gérant les demandes de matériel de bureau a passé commande d'une application au service informatique. Voulant une expérience en développement web j'ai pris l'initative de prendre en charge la conception et le développement de l'application.</p>
+<p>J'ai réalisé cette application sur une période d'un peu plus d'un mois et elle a été livrée en phase de test à la fin de mon stage. Elle m'a permis de consolider mes connaissances en PHP, MySQL, et JavaScript. Sur cette application j'ai largement privilégié la fonctionnalité au "look". Je me suis donc contenté d'ajouter quelques couleurs et bordures et quelques changements de style au survol de certains éléments pour que l'application soit la plus lisible possible.</p>
+<p>A l'heure d'aujourd'hui l'application est opérationnelle et est utilisée quotidiennement à la préfecture d'Avignon et j'en ai reçu que des bons retours.</p>
+<h3>Pour découvrir plus de détails sur l'application et mes autres missions à la préfecture vous pouvez</h3>
+<h3><a href="docs/rapportstagepref.pdf" target="_blank" class="btn">consulter mon rapport de stage</a></h3>
+<br><br><br>

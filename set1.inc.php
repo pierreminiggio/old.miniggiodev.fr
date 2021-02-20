@@ -1,0 +1,3 @@
+<div class="bulles">
+    <div class="bulle1"><img src="images/bulle.png" alt="°"></div><div class="bulle2"><img src="images/bulle.png" alt="°"></div><div class="bulle3"><img src="images/bulle.png" alt="°"></div><div class="bulle4"><img src="images/bulle2.png" alt="°"></div><div class="bulle5"><img src="images/bulle3.png" alt="°"></div><div class="bulle6"><img src="images/bulle3.png" alt="°"></div>
+</div>

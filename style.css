@@ -1,0 +1,918 @@
+@charset "utf-8";
+
+
+
+/* CSS général */
+body {
+    background-image: url("images/background.png");
+    background-size: cover;
+    background-attachment: fixed;
+    font-size: 200%;
+}
+
+#mobile-pres {
+    height: 300px;
+    height: 40vh;
+}
+
+#mobile-pres h1 {
+    font-size: 150%;
+}
+
+#mobile-pres h2 {
+    font-size: 100%;
+}
+
+#mobile-pres h3 {
+    font-size: 80%;
+}
+
+.parallax-container {
+    height: 800px;
+}
+
+.parallax h2 {
+    font-size: 150%;
+}
+
+.fond-onglet {
+
+}
+
+.fond-quisuisje {
+
+}
+
+.fond-apps {
+
+}
+
+.fond-video {
+
+}
+
+.fond-musique {
+    /*background-image: url("images/fond-musique.png");
+    background-size: cover;
+    background-attachment: fixed; */
+}
+
+h1 {
+    text-align: center;
+}
+
+h2 {
+    text-align: center;
+}
+
+h3 {
+    text-align: center;
+}
+
+h6 {
+    text-align: center;
+}
+
+.fleche:after {
+    content: " →";
+}
+
+.fleche:hover:after {
+    position: relative;
+    left: 15px;
+}
+
+/* Bonjour */
+@keyframes couleur {
+    0%   {background-color: rgba(255, 255, 255, .1); color: rgba(0, 0, 0, 1);}
+    25%  {background-color: rgba(255, 0, 0, .1); color: rgba(0, 255, 255, 1);}
+    50%  {background-color: rgba(0, 255, 0, .1); color: rgba(255, 0, 255, 1);}
+    75%  {background-color: rgba(0, 0, 255, .1); color: rgba(255, 255, 0, 1);}
+    100% {background-color: rgba(255, 255, 255, .1); color: rgba(0, 0, 0, 1);}
+}
+
+@keyframes taille {
+    0%   {height : 100vh;}
+    25%  {height : 80vh;}
+    50%  {height : 60vh;}
+    75%  {height : 40vh;}
+    100% {height : 20vh;}
+}
+
+@-webkit-keyframes MOVE-BG {
+   from {
+     -webkit-transform: translateY(0);
+   }
+   to {
+     -webkit-transform: translateY(-187%);
+   }
+}
+
+#bonjour h1 {
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    width: 100%;
+    animation-name: couleur;
+    animation-duration: 20s;
+    animation-iteration-count: infinite;
+}
+
+/* Bloc de contenu */
+.content {
+    background-color: rgba(255, 255, 255, 1);
+
+}
+
+.break {
+    height: 100vh;
+}
+
+.semi-break {
+    height: 50vh;
+}
+
+/* Menu */
+#nav-mobile li {
+    transition : .2s;
+}
+
+#nav-mobile li:hover {
+    background-color: #B75A09;
+    transition : .2s;
+}
+
+/* Qui  suis-je ? */
+
+.res {
+
+}
+
+#texte-contact {
+
+}
+
+.chip {
+    text-align: center;
+}
+
+.res a {
+    display: block;
+}
+
+
+/* CV */
+
+.cv {
+    position: relative;
+}
+
+.cv+div {
+    display: none;
+}
+
+@keyframes feu {
+    0%   {opacity: 0;}
+    5%  {opacity: 1;}
+    20%  {opacity: 1;}
+    25%  {opacity: 0;}
+    100%   {opacity: 0;}
+}
+
+.cv:hover+div {
+    display: block;
+    position: absolute;
+    left: 50%;
+    animation: feu;
+    animation-duration: 10s;
+    animation-iteration-count: infinite;
+}
+
+
+/* Capacités */
+
+.capacites>div {
+    margin-top: 50px;
+}
+
+.capacites {
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+ 	font-weight: bold;
+  font-size: 11px;
+  color: #666;
+  position: relative;
+}
+
+.capacites span {
+    text-align: center;
+    position: absolute;
+    top: -20px;
+    left: -30px;
+    right: -30px;
+    z-index: 2;
+    transition: 3s;
+}
+
+.capacites span:hover {
+    font-size: 200%;
+    left: -40px;
+    right: -40px;
+    color: #444;
+    background-color: #CCC;
+    border: 1px #DDD solid;
+    border-radius: 15px;
+    box-shadow:
+		0 1px 1px rgba(255,255,255,.52),
+		inset 1px 2px 4px rgba(0,0,0,.36);
+    transition: 1s;
+}
+
+::-moz-selection, ::selection {
+	background: transparent;
+}
+.empty {
+    height: 200px;
+    width: 100%;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	border-radius: 6px;
+	-moz-box-shadow:
+		0 1px 1px rgba(255,255,255,.52),
+		inset 1px 2px 4px rgba(0,0,0,.36);
+	-webkit-box-shadow:
+		0 1px 1px rgba(255,255,255,.52),
+		inset 1px 2px 4px rgba(0,0,0,.36);
+	box-shadow:
+		0 1px 1px rgba(255,255,255,.52),
+		inset 1px 2px 4px rgba(0,0,0,.36);
+	background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+PGxpbmVhckdyYWRpZW50IGlkPSJoYXQwIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjUwJSIgeTE9IjEwMCUiIHgyPSI1MCUiIHkyPSIwJSI+CjxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiNmZmYiIHN0b3Atb3BhY2l0eT0iMC43Ii8+CjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzMxMzEzMSIgc3RvcC1vcGFjaXR5PSIwLjciLz4KICAgPC9saW5lYXJHcmFkaWVudD4KCjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjaGF0MCkiIC8+Cjwvc3ZnPg==);
+	background-image: -moz-linear-gradient(90deg, rgba(255,255,255,.7) 0%, rgba(49,49,49,.7) 100%);
+	background-image: -o-linear-gradient(90deg, rgba(255,255,255,.7) 0%, rgba(49,49,49,.7) 100%);
+	background-image: -webkit-linear-gradient(90deg, rgba(255,255,255,.7) 0%, rgba(49,49,49,.7) 100%);
+	background-image: linear-gradient(90deg, rgba(255,255,255,.7) 0%, rgba(49,49,49,.7) 100%);
+	position: relative;
+	float: left;
+        box-sizing: border-box;
+}
+
+.fill {
+	width: 100%;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	border-radius: 6px;
+	-moz-box-shadow:
+		0 -2px 5px rgba(0,0,0,.3),
+		inset 0 1px 2px rgba(255,255,255,.75);
+	-webkit-box-shadow:
+		0 -2px 5px rgba(0,0,0,.3),
+		inset 0 1px 2px rgba(255,255,255,.75);
+	box-shadow:
+		0 -2px 5px rgba(0,0,0,.3),
+		inset 0 1px 2px rgba(255,255,255,.75);
+	position: absolute;
+	bottom: 0;
+        box-sizing: border-box;
+}
+
+.bulles {
+    position: relative;
+    display: block;
+}
+
+/* Set 1 */
+
+@keyframes bulle1 {
+    0%   {bottom : 0; left : 50%;}
+    20%   {bottom : 25%; left : 30%;}
+    40%   {bottom : 50%; left : 15%;}
+    60%   {bottom : 75%; left : 45%;}
+    80%  {bottom : 100%; left : 40%; opacity : 0;}
+    100% {opacity : 0;}
+}
+
+.bulle1 {
+    position: absolute;
+    animation: bulle1 linear;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes bulle2 {
+    0%   {bottom : 0; left : 60%;}
+    15%   {bottom : 25%; left : 70%;}
+    30%   {bottom : 50%; left : 80%;}
+    45%   {bottom : 75%; left : 60%;}
+    60%  {bottom : 100%; left : 90%; opacity : 0;}
+    100%  {opacity : 0;}
+}
+
+.bulle2 {
+    position: absolute;
+    animation: bulle2 linear;
+    animation-duration: 1.5s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes bulle3 {
+    0%   {bottom : 0; left : 90%;}
+    25%   {bottom : 25%; left : 50%;}
+    50%   {bottom : 50%; left : 10%;}
+    75%   {bottom : 75%; left : 60%;}
+    100%  {bottom : 100%; left : 40%; opacity : 0;}
+}
+
+.bulle3 {
+    position: absolute;
+    animation: bulle3 linear;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes bulle4 {
+    0%   {bottom : -5%; left : 20%;}
+    5%   {bottom : 25%; left : 30%;}
+    10%   {bottom : 50%; left : 40%;}
+    15%   {bottom : 75%; left : 20%;}
+    20%  {bottom : 85%; left : 30%;}
+    21%  {opacity : 0;}
+    100%  {opacity : 0;}
+}
+
+.bulle4 {
+    position: absolute;
+    animation: bulle4 linear;
+    animation-duration: 10s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes bulle5 {
+    0%   {bottom : -5%; left : 40%;}
+    10%   {bottom : 25%; left : 30%;}
+    20%   {bottom : 50%; left : 20%;}
+    30%   {bottom : 75%; left : 40%;}
+    40%  {bottom : 100%; left : 30%; opacity : 0;}
+    100%  {opacity : 0;}
+}
+
+.bulle5 {
+    position: absolute;
+    animation: bulle5 linear;
+    animation-duration: 6s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes bulle6 {
+    0%  {opacity : 0;}
+    29%   {bottom : -5%; left : 80%; opacity: 0;}
+    30%   {opacity: 1;}
+    40%   {bottom : 25%; left : 60%;}
+    50%   {bottom : 50%; left : 70%;}
+    60%   {bottom : 75%; left : 50%;}
+    70%  {bottom : 100%; left : 40%; opacity : 0;}
+    100%  {opacity : 0;}
+}
+
+.bulle6 {
+    position: absolute;
+    animation: bulle6 linear;
+    animation-duration: 6s;
+    animation-iteration-count: infinite;
+}
+
+/* Set 2 */
+
+@keyframes bulle7 {
+    0%   {bottom : 0; left : 50%;}
+    20%   {bottom : 25%; left : 40%;}
+    40%   {bottom : 50%; left : 30%;}
+    60%   {bottom : 75%; left : 40%;}
+    80%  {bottom : 100%; left : 35%; opacity : 0;}
+    100% {opacity : 0;}
+}
+
+.bulle7 {
+    position: absolute;
+    animation: bulle7 linear;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes bulle8 {
+    0%   {bottom : 0; left : 60%;}
+    15%   {bottom : 25%; left : 65%;}
+    30%   {bottom : 50%; left : 70%;}
+    45%   {bottom : 75%; left : 65%;}
+    60%  {bottom : 100%; left : 75%; opacity : 0;}
+    100%  {opacity : 0;}
+}
+
+.bulle8 {
+    position: absolute;
+    animation: bulle8 linear;
+    animation-duration: 0.75s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes bulle9 {
+    0%   {bottom : 0; left : 70%;}
+    25%   {bottom : 25%; left : 60%;}
+    50%   {bottom : 50%; left : 10%;}
+    75%   {bottom : 75%; left : 30%;}
+    100%  {bottom : 100%; left : 20%; opacity : 0;}
+}
+
+.bulle9 {
+    position: absolute;
+    animation: bulle9 linear;
+    animation-duration: 1.5s;
+    animation-iteration-count: infinite;
+}
+/* Grosse bulle non utilisée
+
+@keyframes bulle10 {
+    0%   {bottom : -5%; left : 20%;}
+    5%   {bottom : 25%; left : 30%;}
+    10%   {bottom : 50%; left : 25%;}
+    15%   {bottom : 75%; left : 20%;}
+    20%  {bottom : 100%; left : 15%;}
+    25%  {opacity : 0;}
+    100%  {opacity : 0;}
+}
+
+.bulle10 {
+    position: absolute;
+    animation: bulle10 linear;
+    animation-duration: 5s;
+    animation-iteration-count: infinite;
+}
+
+*/
+@keyframes bulle11 {
+    0%  {opacity : 0;}
+    39%  {opacity : 0;}
+    40%   {bottom : -5%; left : 40%; opacity : 1;}
+    50%   {bottom : 25%; left : 35%;}
+    60%   {bottom : 50%; left : 30%;}
+    70%   {bottom : 75%; left : 35%;}
+    80%  {bottom : 100%; left : 30%; opacity : 0;}
+    100%  {opacity : 0;}
+}
+
+.bulle11 {
+    position: absolute;
+    animation: bulle11 linear;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes bulle12 {
+    0%  {opacity : 0;}
+    29%   {bottom : -5%; left : 80%; opacity: 0;}
+    30%   {opacity: 1;}
+    40%   {bottom : 25%; left : 75%;}
+    50%   {bottom : 50%; left : 70%;}
+    60%   {bottom : 75%; left : 65%;}
+    70%  {bottom : 100%; left : 60%; opacity : 0;}
+    100%  {opacity : 0;}
+}
+
+.bulle12 {
+    position: absolute;
+    animation: bulle12 linear;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+}
+
+.vouspouvezsurvoler {
+
+}
+
+.vouspouvezsurvoler:after {
+    display: block;
+    position: absolute;
+    content: "\A \A0 Vous pouvez survoler les noms des compétences pour lire quelques informations supplémentaires!";
+    font-size: 25%;
+    color: orange;
+
+
+}
+
+.cHtml {
+	height: 99%;
+	background-color: #E16A3B;
+	border: 1px solid #D25836;
+}
+
+.cHtml .bulles {
+    height: 99%;
+    top: 1%;
+}
+
+.cHtml+span:hover:after {
+    display: block;
+    font-size: 50%;
+    content: "\A \A0 J'utilise le langage HTML pour lister le contenu de mes pages web. Comme c'est le cas sur ce site!";
+}
+
+.cCss {
+	height: 90%;
+	background-color: #479FD4;
+	border: 1px solid #246BAA;
+}
+
+.cCss .bulles {
+    height: 90%;
+    top: 10%;
+}
+
+.cCss+span:hover:after {
+    display: block;
+    font-size: 50%;
+    content: "\A \A0 Le CSS me permet de modifier l'apparence de mon contenu, de faire apparaitre ces cadres explicatif et accessoirement de créer des animations comme pour ces bulles!";
+}
+
+.cPhp {
+	height: 80%;
+	background-color: #A0A1C0;
+	border: 1px solid #6180C0;
+}
+
+.cPhp .bulles {
+    height: 80%;
+    top: 20%;
+}
+
+.cPhp+span:hover:after {
+    display: block;
+    font-size: 50%;
+    content: "\A \A0 Grâce au PHP je peux regrouper mon code générique que j'ai besoin à plusieurs endrois de la page, comme les liens du menu de navigation de ce site. De plus il me permet d'ajouter des fonctionnalités intéressantes à mes applications, comme par exemple avec ce formulaire de contact!";
+}
+
+.cMysql {
+	height: 70%;
+	background-color: #E48E00;
+	border: 1px solid #FFFFFF;
+}
+
+.cMysql .bulles {
+    height: 70%;
+    top: 30%;
+}
+
+.cMysql+span:hover:after {
+    display: block;
+    font-size: 50%;
+    content: "\A \A0 On vit dans un monde où on parle beaucoup de données. Il est donc important de pouvoir les stocker dans des bases pour pouvoir les exploiter!";
+}
+
+.cJs {
+	height: 65%;
+	background-color: #FFDA3E;
+	border: 1px solid #D6BA32;
+}
+
+.cJs .bulles {
+    height: 65%;
+    top: 35%;
+}
+
+.cJs+span:hover:after {
+    display: block;
+    font-size: 50%;
+    content: "\A \A0 Rien de mieux pour dynamiser les pages web. J'ai beaucoup utilisé le JavaScript dans les formulaires pour afficher des informations à l'utilisateur pour rendre mes interfaces les plus lisibles possibles.";
+}
+
+.cMaterialize {
+	height: 90%;
+	background-color: #EE6E73;
+	border: 1px solid #F8A1AB;
+}
+
+.cMaterialize .bulles {
+    height: 90%;
+    top: 10%;
+}
+
+.cMaterialize+span:hover:after {
+    display: block;
+    font-size: 50%;
+    content: "\A \A0 Mon framework CSS et JS préféré! J'utilise beaucoup les éléments de page fournis pour accélerer la mise en place de mes sites et applications. Sur ce site beaucoup d'éléments, dont le menu et le footer, sont faciles à produire grâce à materialize! Ce framework aide également à afficher les sites correctements sur toutes les tailles d'écran!";
+}
+
+.cBootstrap {
+	height: 60%;
+	background-color: #5D29A8;
+	border: 1px solid #34145F;
+}
+
+.cBootstrap .bulles {
+    height: 60%;
+    top: 40%;
+}
+
+.cBootstrap+span:hover:after {
+    display: block;
+    font-size: 50%;
+    content: "\A \A0 Un autre framework CSS et JS qui offre des fonctionnalités très similaires à Materialize.";
+}
+
+.cPython {
+	height: 50%;
+	background-color: #3673A6;
+	border: 1px solid #274E70;
+}
+
+.cPython .bulles {
+    height: 50%;
+    top: 50%;
+}
+
+.cPython+span:hover:after {
+    display: block;
+    font-size: 50%;
+    content: "\A \A0 Le premier langage que j'ai utilisé pour programmer autre chose que du web.";
+}
+
+.cJava {
+	height: 65%;
+	background-color: #EA2D2F;
+	border: 1px solid #FFFFFF;
+}
+
+.cJava .bulles {
+    height: 65%;
+    top: 35%;
+}
+
+.cJava+span:hover:after {
+    display: block;
+    font-size: 50%;
+    content: "\A \A0 Le langage objet principal que j'utilise.";
+}
+
+.cPaintdotnet {
+	height: 99%;
+	background-color: #0853B4;
+	border: 1px solid #001045;
+}
+
+.cPaintdotnet .bulles {
+    height: 99%;
+    top: 1%;
+}
+
+.cPaintdotnet+span:hover:after {
+    display: block;
+    font-size: 50%;
+    content: "\A \A0 Attention : Paint et Paint Dot Net ne sont pas le même programme malgré leurs noms similaires! Paint Dot Net est un logiciel d'édition d'images disposant de plusieurs calques et autres fonctionnalités avancées. Il est très similaire à Photoshop. Je l'ai utilisé pour créer et modifier les images, images animées et icones de mes sites et applications. Beaucoup des élément graphiques de ce site ont été faits en utilisant ce logiciel. Par exemple le 'Nyan Mail' de ce site a été réalisé grâce à ce logiciel. Utilisez le formulaire de contact de mon site pour m'envoyer un message dès maintenant si vous voulez voir le gif animé!";
+}
+
+.cPhotoshop {
+	height: 50%;
+	background-color: #00C8FF;
+	border: 1px solid #001D26;
+}
+
+.cPhotoshop .bulles {
+    height: 50%;
+    top: 50%;
+}
+
+.cPhotoshop+span:hover:after {
+    display: block;
+    font-size: 50%;
+    content: "\A \A0 J'utilise principalement Paint Dot Net, mais il m'arrive de rencontrer des situations où utiliser Photoshop peut être plus cohérent. Donc je m'y suis mis!";
+}
+
+.cGestionProjet {
+	height: 55%;
+	background-color: #9CBE36;
+	border: 1px solid #08998A;
+}
+
+.cGestionProjet .bulles {
+    height: 55%;
+    top: 45%;
+}
+
+.cGestionProjet+span:hover:after {
+    display: block;
+    font-size: 50%;
+    content: "\A \A0 Pour beaucoup de mes activités personnelles, je suis un auto didacte, et professionnellement beaucoup de mes projets ont été fait en autonomie en contact avec un client. J'ai également travaillé en équipe sur mes projets tuteurés durant ma formation.";
+}
+
+/* 2eme ligne capacités */
+
+
+/* Mail */
+
+.mailbox {
+    display: block;
+    width: 50%;
+    height: 400px;
+    height: 50vh;
+    margin-left: 25%;
+    margin-right: 25%;
+    margin-top: 25vh;
+    background-color: #0E4572;
+    color: #FFF;
+}
+
+
+
+/* Apps */
+
+.apps h5, .apps h6, .apps a {
+    text-align: center;
+}
+
+.apps h5, .apps h6 {
+    position: relative;
+    top: -20px;
+}
+
+.apps a {
+    display: block;
+}
+
+.apps p {
+    text-align: justify;
+}
+
+.card-title-height {
+    height: 110px;
+}
+
+.card-text {
+}
+
+.hover-after {
+    position: relative;
+}
+
+.hover-after:after {
+    width: auto;
+    position: absolute;
+    top: 120px;
+    left: 5%;
+    right: 5%;
+    text-align: center;
+    color: white;
+    background-color: grey;
+    opacity: 0;
+    transition: 1s;
+}
+
+.hover-after:hover:after {
+    opacity: 0.6;
+    transition: 1.5s;
+}
+
+.read-more:after {
+    content : "Cliquez sur la carte pour en savoir plus...";
+}
+
+.access:after {
+    content : "Cliquez pour accèder au site...";
+}
+
+.applink {
+    color: inherit;
+}
+/* Vidéo */
+
+
+
+/* Musique */
+
+.music>div {
+    border: 1px #DDD solid;
+    border-radius: 10px;
+    background-color: #fafafa;
+}
+
+.music>div>audio {
+    width: 100%;
+}
+
+/* Footer */
+footer ul>li {
+}
+
+footer ul>li:hover {
+    background-color: rgba(245, 124, 0, 1);
+}
+
+/* Responsive */
+
+#titre-onglet-mobile {
+    text-align: center;
+    color: #FFF;
+    background-color: #F57C00;
+    margin-top: 0;
+    font-size: 8vw;
+}
+
+#titre-onglet-mobile a {
+    text-decoration: inherit;
+    color: inherit;
+}
+
+.vraiment-trop-petit {
+    display: none;
+}
+
+@media screen and (min-width: 360px) {
+    .vraiment-trop-petit {
+        display: inline-block;
+    }
+}
+
+
+.trop-petit {
+    display: none;
+}
+
+#nom-footer {
+    font-size: 12px;
+}
+
+@media screen and (min-width: 501px) {
+    .trop-petit {
+        display: inline-block;
+    }
+
+    #nom-footer {
+        font-size: inherit;
+    }
+}
+
+#logo {
+    font-size: 22px;
+}
+
+@media screen and (min-width: 745px) {
+    .res {
+        border: 1px gray solid;
+        border-radius: 10px;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        width: 98%;
+    }
+
+    #logo {
+        font-size: 32px;
+    }
+
+}
+
+@media screen and (min-width: 900px) {
+}
+
+@media screen and (min-width: 990px) {
+    .res {
+        width: 90%;
+    }
+
+    .chip>a {
+    font-size: 80%;
+    }
+
+    .music {
+        width: 90%;
+    }
+
+    body {
+        font-size: 100%;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .res {
+        width: 80%;
+    }
+
+    .chip>a {
+    font-size: 90%;
+    }
+
+    .music {
+        width: 80%;
+    }
+}
+
+@media screen and (min-width: 1600px) {
+    .res {
+        width: 70%;
+    }
+
+    .chip>a {
+    font-size: 100%;
+    }
+
+    .music {
+        width: 70%;
+    }
+}
+
+
+

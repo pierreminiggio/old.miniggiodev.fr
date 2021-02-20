@@ -1,0 +1,230 @@
+.calendrier {
+    background-image: url('img/noel.png');
+    background-size: 100%;
+    background-repeat: no-repeat;
+    position: relative;
+    height: 56.25vw;
+}
+.calendrier h2 {
+    text-align: center; 
+}
+.calendrier #infos {
+    position: absolute;
+    background-color: rgba(255,255,255,.8);
+    border: 1px #CCC solid;
+    box-sizing: border-box;
+    display: none;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.calendrier #infos img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.calendrier #X {
+    position: absolute;
+    font-size: 200%;
+    display: none;
+    top: 0;
+    right: 0;
+}
+
+.calendrier a {
+    color: inherit;
+    text-decoration: inherit;
+    display: block;
+}
+
+.case {
+    text-align: center;
+    font-size: 200%;
+    box-sizing: border-box;
+    height: 100px;
+    width: 100px;
+    line-height: 100px;
+    display: inline-block;
+}
+
+.blanc {
+    opacity: 0.35;
+    border: 1px #fff solid;
+    color: #fff;
+}
+
+.noir {
+    opacity: 0.15;
+    border: 1px #000 solid;
+    color: #000;
+}
+
+.case:hover {
+    background-color: white;
+    color: black;
+    opacity: 1;
+}
+
+@media screen and (min-width: 1000px)
+{
+    .calendrier #infos {
+        left: 20%;
+        right: 20%;
+        top: 10%;
+        bottom: 10%;
+        height: 80%;
+        width: 60%;
+    }
+    
+    .calendrier #X {
+        top: 10%;
+        right: 20%;
+    }
+    
+    .case {
+        position: absolute;
+        display: block;
+        height: 50px;
+        width: 50px;
+        line-height: 50px;
+    }
+    
+    .case1026 {
+        height: 100px;
+        width: 100px;
+        line-height: 100px;
+    }
+    
+    #case1 {
+        left: 40%;
+        bottom: 5%;
+    }
+    
+    #case2 {
+        left: 45%;
+        top: 5%;
+    }
+    
+    #case3 {
+        left: 65%;
+        top: 25%;
+    }
+    
+    #case4 {
+        left: 25%;
+        bottom: 25%;
+    }
+    
+    #case5 {
+        right: 5%;
+        top: 25%;
+    }
+    
+    #case6 {
+        right: 15%;
+        top: 35%;
+    }
+    
+    #case7 {
+        left: 28%;
+        top: 0%;
+    }
+    
+    #case8 {
+        right: 0%;
+        top: 0%;
+    }
+    
+    #case9 {
+        left: 5%;
+        top: 10%;
+    }
+    
+    #case10 {
+        right: 0%;
+        bottom: 0%;
+    }
+    
+    #case11 {
+        right: 20%;
+        top: 5%;
+    }
+    
+    #case12 {
+        left: 10%;
+        bottom: 15%;
+    }
+    
+    #case13 {
+        left: 20%;
+        top: 15%;
+    }
+    
+    #case14 {
+        left: 45%;
+        top: 25%;
+    }
+    
+    #case15 {
+        right: 15%;
+        bottom: 25%;
+    }
+    
+    #case16 {
+        left: 17%;
+        top: 30%;
+    }
+    
+    #case17 {
+        left: 50%;
+        top: 50%;
+    }
+    
+    #case18 {
+        right: 35%;
+        bottom: 5%;
+    }
+    
+    #case19 {
+        left: 33%;
+        bottom: 15%;
+    }
+    
+    #case20 {
+        right: 7%;
+        top: 45%;
+    }
+    
+    #case21 {
+        right: 30%;
+        top: 7%;
+    }
+    
+    #case22 {
+        left: 34%;
+        bottom: 33%;
+    }
+    
+    #case23 {
+        left: 5%;
+        bottom: 45%;
+    }
+    
+    #case24 {
+        right: 3%;
+        bottom: 30%;
+    }
+    
+    #case25 {
+        height: 25px;
+        width: 25px;
+        font-size: 100%;
+        line-height: 25px;
+        left: 35.5%;
+        top: 40%;
+    }
+    
+}

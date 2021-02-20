@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Cookie!</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="author" content="Marion MACQUET, Billy MEY et Pierre MINIGGIO">
+        <meta name="keywords" content='"javascript", "pageweb", "cookie"'>
+        <link rel="icon" href="favicon.ico" />
+        
+        <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+   <!--Import Google Icon Font-->
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <!--Import materialize.css-->
+      <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+
+      <!--Let browser know website is optimized for mobile-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+      <style>
+          h1, h2 {
+    text-align: center;
+}
+
+.buttonrow div {
+    text-align: center;
+}
+
+.break {
+    height: 100vh;   
+}
+
+#cover1 {
+    background : url(https://loremflickr.com/1280/720);
+    background-size: cover;
+}
+
+#cover2 {
+    background : url(https://loremflickr.com/960/540);
+    background-size: cover;
+}
+
+#cover3 {
+    background : url(https://loremflickr.com/480/270);
+    background-size: cover;
+}
+
+#cover4 {
+    background : url(https://loremflickr.com/640/360);
+    background-size: cover;
+}
+
+#cover5 {
+    background : url(https://loremflickr.com/1280/720);
+    background-size: cover;
+}
+
+#resultat {
+    height: 100px;
+}
+
+#visages {
+    width: 100%;
+}
+
+/* style graph */
+#container {
+             width: 100%;
+             height: 1000px;
+             margin: 0;
+             padding: 0;
+         }
+         
+/* Empecher le scroll dans le frame */         
+iframe {
+    overflow:hidden;
+    width: 100%;
+}
+
+      </style>
+      <script>
+
+          function creerCookie(nom, valeur, jours) {
+
+// Le nombre de jours est spécifié
+        if (jours) {
+var date = new Date();
+                // Converti le nombre de jour en millisecondes
+date.setTime(date.getTime()+(jours*24*60*60*1000));
+var expire = "; expire="+date.toGMTString();
+}
+        // Aucune valeur de jours spécifiée
+else var expire = "";
+document.cookie = nom+"="+valeur+expire+"; path=/";
+
+// Affichage
+alert("Le cookie "+nom+" a été créé. Il a comme message "+valeur+" et expire le "+(expire));
+document.location.href="index.html"
+
+}
+
+function getCookie(name){
+    
+     if(document.cookie.length === 0)
+       return null;
+
+     var regSepCookie = new RegExp('(; )', 'g');
+     var cookies = document.cookie.split(regSepCookie);
+
+     for(var i = 0; i < cookies.length; i++){
+       var regInfo = new RegExp('=', 'g');
+       var infos = cookies[i].split(regInfo);
+       if(infos[0] === name){
+         alert (unescape('Le cookie '+infos[0])+' a été enregistré avec comme valeur : '+unescape(infos[1]));
+         return unescape(infos[1]);
+       }
+     }
+     return null;
+   }
+   
+   function generer(){
+       nom1 = document.getElementById("nom1").value;
+       nom2 = document.getElementById("nom2").value;
+       adjectif = document.getElementById("adjectif").value;
+       verbe = document.getElementById("verbe").value;
+       verbePresent = verbe.substring(0,verbe.length-1);
+       participePasse = verbe.substring(0,verbe.length-2)+"é";
+       phrase1 = "Le "+nom1+" "+verbePresent+" le "+nom2;
+       phrase2 = "Le "+nom2+" a été "+participePasse+" par le "+nom1;
+       phrase3 = "Le "+nom1+" est "+adjectif+", mais le "+nom2+" l'est tout autant!";
+       document.getElementById('resultat').value = phrase1+"\n"+phrase2+"\n"+phrase3;
+   }
+
+
+
+
+      </script>
+  
+      
+      <script src="https://cdn.anychart.com/releases/8.0.1/js/anychart-base.min.js"></script>
+        
+        <script src="https://cdn.anychart.com/releases/8.0.1/js/anychart-ui.min.js"></script>
+        
+        <script src="https://cdn.anychart.com/releases/8.0.1/js/anychart-exports.min.js"></script>
+        
+        
+        <link rel="stylesheet" href="https://cdn.anychart.com/releases/8.0.1/css/anychart-ui.min.css" />
+        
+        <link rel="stylesheet" href="https://cdn.anychart.com/releases/8.0.1/fonts/css/anychart-font.min.css" />
+        
+        
+    </head>
+    <body>
+        Les images de chat de ce site sont générées grâce à <a href="https://loremflickr.com" target="blank">LoremFlickr</a>.<br><br><br>
+        <div class="row">
+            <div class="col s12 m6 l3">
+                Les étudiants derrière cette page :<br>
+                <img src="img/visages.gif" alt="Visages des étudiants" onselectstart="return false" oncontextmenu="return false" ondragstart="return false" id="visages">
+            </div>
+            <div class="col s12 m6 l9">
+                <h1>Exercice de documentation - la page web!</h1>
+                <p>Tout ce contenu est concentré sur une unique page web!</p>
+            </div>
+        </div>
+        
+        <nav>
+    <div class="nav-wrapper">
+        <a href="#" class="brand-logo left"><img src='img/cookie.png' alt="cookie" width="56"></a>
+      <ul id="nav-mobile" class="right">
+          <li><a class="btn" href="#spinning">Direction le content spinning!</a></li>
+          <li><a href="#graph" class="btn">Je veux voir un joli graph!</a></li>
+          <li><a href="#slider" class="btn">Accéder au slider!</a></li>
+          <li><a href="#audiovideo" class="btn">Contenu audio/vidéo</a></li>
+      </ul>
+    </div>
+  </nav>
+         
+       
+        <h2>Utilisation d'un <img src='img/cookie.png' alt="cookie" width="65"> uniquement en JavaScript</h2>
+        <div class="row buttonrow">
+            <div class="col s12 m6 l6">
+                <a class="btn" href="#" onclick="creerCookie('Cookie1', 'Salut je suis un gentil Cookie', 2 );">Générer un Cookie!</a>
+            </div>
+            <div class="col s12 m6 l6">
+                <a class="btn" href="#" onclick="getCookie('Cookie1');">Infos sur le Cookie</a>
+            </div>
+        </div>
+        <div class="break" id="cover1"></div>
+        <nav>
+    <div class="nav-wrapper">
+        <a href="#spinning" class="brand-logo left" id="spinning">Content Spinning</a>
+      <ul id="nav-mobile" class="right">
+          <li><a href="#" class="btn">Je veux des cookies!</a></li>
+          <li><a href="#graph" class="btn">Je veux voir un joli graph!</a></li>
+          <li><a href="#slider" class="btn">Je veux slider un slider!</a></li>
+          <li><a href="#audiovideo" class="btn">Contenu audio/vidéo</a></li>
+      </ul>
+    </div>
+  </nav>
+        <h2>Le content spinning!</h2>
+        <div class="row">
+            <div class="col s12 m6 l3">
+          Entrez un nom commun masculin :<input placeholder="Nom commun" id="nom1" type="text">
+            </div>
+            <div class="col s12 m6 l3">
+          Entrez un 2ème nom commun masculin :<input placeholder="Nom commun" id="nom2" type="text">
+            </div>
+            <div class="col s12 m6 l3">
+          Entrez un adjectif qualificatif :<input placeholder="Adjectif" id="adjectif" type="text">
+            </div>
+            <div class="col s12 m6 l3">
+          Entrez un verbe du premier groupe (-er) :<input placeholder="Verbe" id="verbe" type="text">
+            </div>
+        </div>
+        <div class="row">
+            <a class="btn col s12 offset-m3 m6 offset-l4 l4" href="#spinning" onclick="generer()">Générer des phrases!</a>
+        </div>
+        Phrases générées :
+        <textarea id="resultat" rows="4"></textarea>
+        <div class="break" id="cover2"></div>
+        
+        <nav>
+    <div class="nav-wrapper">
+        <a href="#graph" class="brand-logo left" id="graph">Graph</a>
+      <ul id="nav-mobile" class="right">
+          <li><a href='#' class='btn'>Le retour du cookie</a></li>
+          <li><a href='#spinning' class='btn'>Je veux spinner plus de content!</a></li>
+          <li><a href="#slider" class="btn">Je veux slider un slider!</a></li>
+          <li><a href="#audiovideo" class="btn">Contenu audio/vidéo</a></li>
+      </ul>
+    </div>
+  </nav>
+        <h2>Graphique à partir d'un fichier CSV</h2>
+        On est capable d'afficher le contenu du CSV mais on a pas encore réussi à éditer le graphique grâce au CSV.
+        <label for="file">Choisissez un fichier texte</label>
+<input type="file" id="file" />
+<pre id="resultat2"></pre>
+        <div id="container"></div>
+        <script type="text/javascript">
+             anychart.onDocumentReady(graphloading("2059;100;125;150\n2090;200;225;250\n2135;10;125;20"));
+             
+             function graphloading(texte) {
+// create data set on our data
+var dataSet = anychart.data.set(getDataFromText(texte));
+
+// map data for the first series, take x from the zero column and value from the first column of data set
+var seriesData_1 = dataSet.mapAs({'x': 0, 'value': 1});
+
+// map data for the second series, take x from the zero column and value from the second column of data set
+var seriesData_2 = dataSet.mapAs({'x': 0, 'value': 2});
+
+// map data for the third series, take x from the zero column and value from the third column of data set
+var seriesData_3 = dataSet.mapAs({'x': 0, 'value': 3});
+
+// create line chart
+chart = anychart.line();
+
+// turn on chart animation
+chart.animation(true);
+
+// set chart padding
+chart.padding([10, 20, 5, 20]);
+
+// turn on the crosshair
+chart.crosshair()
+        .enabled(true)
+        .yLabel(false)
+        .yStroke(null);
+
+// set tooltip mode to point
+chart.tooltip().positionMode('point');
+
+// set chart title text settings
+chart.title('Graph très sérieux montrant le taux de fainéantise dans le groupe en fonction du temps :');
+
+// set yAxis title
+chart.xAxis().title('temps (mn)');
+chart.yAxis().title('Taux de fainéantise (%)');
+chart.xAxis().labels().padding(5);
+
+// create first series with mapped data
+var series_1 = chart.line(seriesData_1);
+series_1.name('Marion');
+series_1.hovered().markers()
+        .enabled(true)
+        .type('circle')
+        .size(4);
+series_1.tooltip()
+        .position('right')
+        .anchor('left-center')
+        .offsetX(5)
+        .offsetY(5);
+
+// create second series with mapped data
+var series_2 = chart.line(seriesData_2);
+series_2.name('Billy');
+series_2.hovered().markers()
+        .enabled(true)
+        .type('circle')
+        .size(4);
+series_2.tooltip()
+        .position('right')
+        .anchor('left-center')
+        .offsetX(5)
+        .offsetY(5);
+
+// create third series with mapped data
+var series_3 = chart.line(seriesData_3);
+series_3.name('Pierre');
+series_3.hovered().markers()
+        .enabled(true)
+        .type('circle')
+        .size(4);
+series_3.tooltip()
+        .position('right')
+        .anchor('left-center')
+        .offsetX(5)
+        .offsetY(5);
+
+// turn the legend on
+chart.legend()
+        .enabled(true)
+        .fontSize(13)
+        .padding([0, 0, 10, 0]);
+
+// set container id for the chart and set up paddings
+chart.container('container');
+
+// initiate chart drawing
+chart.draw();
+    }
+
+    function getData() {
+        tableau = [];
+texte = "2059;100;125;150\n2090;200;225;250\n2125;10;125;20";
+lignes = texte.split("\n");
+for (i=0; i<lignes.length; i++) {
+    lignestring = lignes[i].split(";");
+    ligne = [lignestring[0], lignestring[1], lignestring[2], lignestring[3]];
+    tableau.push(ligne);
+}
+
+return tableau;
+    }
+    
+    
+    
+    window.onload = function() {
+    var f = document.getElementById('file'),
+        res = document.getElementById('resultat2');
+    f.onchange = function() {
+        var file = f.files[0],
+            fr = new FileReader();
+             
+        fr.onprogress = function() {
+            res.innerHTML = 'Chargement...';
+        };
+        fr.onerror = function() {
+            res.innerHTML = 'Oups, une erreur s\'est produite...';
+        };
+        fr.onload = function() {
+            res.innerHTML = '';
+            res.appendChild(document.createTextNode(fr.result));
+            this.graphloading(fr.result);
+            alert(fr.result);
+            
+        };
+         
+        fr.readAsText(file);
+    };
+};
+
+
+function getDataFromText(texte) {
+        tableau = [];
+lignes = texte.split("\n");
+for (i=0; i<lignes.length; i++) {
+    lignestring = lignes[i].split(";");
+    ligne = [lignestring[0], lignestring[1], lignestring[2], lignestring[3]];
+    tableau.push(ligne);
+}
+
+return tableau;
+    }
+        </script>
+        
+        <div class="break" id="cover3"></div>
+        
+        <nav>
+    <div class="nav-wrapper">
+        <a href="#slider" class="brand-logo left" id="slider">Slider</a>
+      <ul id="nav-mobile" class="right">
+          <li><a href='#' class='btn'>Le retour du cookie</a></li>
+          <li><a href='#spinning' class='btn'>Je veux spinner plus de content!</a></li>
+          <li><a href="#graph" class="btn">Je veux retourner voir le graphique!</a></li>
+          <li><a href="#audiovideo" class="btn">Contenu audio/vidéo</a></li>
+      </ul>
+    </div>
+  </nav>
+        
+        <h2>Le slider d'images!</h2>
+        <h2>Un exemple de slider de Materialize:</h2>
+        <iframe src='http://materializecss.com/carousel.html#slider' title="Slider" width='1280' height='720' scrolling="no"></iframe>
+        <div class="break" id="cover4"></div>
+        
+        <nav>
+    <div class="nav-wrapper">
+        <a href="#audiovideo" class="brand-logo left" id="audiovideo">Audio / Vidéo</a>
+      <ul id="nav-mobile" class="right">
+          <li><a href='#' class='btn'>Le retour du cookie</a></li>
+          <li><a href='#spinning' class='btn'>Je veux spinner plus de content!</a></li>
+          <li><a href="#graph" class="btn">Je veux retourner voir le graphique!</a></li>
+          <li><a href="#slider" class="btn">Je slide!</a></li>
+      </ul>
+    </div>
+  </nav>
+        <h2>De l'audio :</h2>
+        
+        Musique <a href="https://www.youtube.com/watch?v=biDJkJDEqro" target="blank">Distorsion</a> :<br>
+        <audio controls="controls" onselectstart="return false" oncontextmenu="return false" ondragstart="return false">
+            <source src="audio/Distorsion.mp3" type="audio/mp3" />
+        </audio>
+        
+        <div class="break" id="cover5"></div>
+        
+        <!--Import jQuery before materialize.js-->
+      <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+      <script type="text/javascript" src="js/materialize.min.js"></script>
+    </body>
+</html>
