@@ -37,5 +37,5 @@ $likes = array_map(fn (array $entry) => [
 ));
 
 http_response_code(200);
-echo json_encode($likes);
+echo json_encode(['likes' => $likes]);
 exit;
