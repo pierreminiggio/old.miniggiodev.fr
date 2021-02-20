@@ -5,16 +5,16 @@ require_once(__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'fonct
 $authHeader = $_SERVER['HTTP_AUTHORIZATION'];
 
 $config = require
-            __DIR__
-            . DIRECTORY_SEPARATOR
-            . '..'
-            . DIRECTORY_SEPARATOR
-            . '..'
-            . DIRECTORY_SEPARATOR
-            . '..'
-            . DIRECTORY_SEPARATOR
-            . 'config.php'
-        ;
+    __DIR__
+    . DIRECTORY_SEPARATOR
+    . '..'
+    . DIRECTORY_SEPARATOR
+    . '..'
+    . DIRECTORY_SEPARATOR
+    . '..'
+    . DIRECTORY_SEPARATOR
+    . 'config.php'
+;
 $validToken = $config['apiToken'];
 
 if (! $authHeader || $authHeader !== 'Bearer ' . $validToken) {
