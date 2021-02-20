@@ -28,6 +28,6 @@ $likes = $fetcher->query(
         ->createQuery('social__youtube')
         ->select('id', 'youtubeid as youtube_id', 'title', 'channel_id')
         ->where('channel_id IS NOT NULL AND videoed_at IS NULL')
-)
+);
 var_dump($likes);
 exit;
