@@ -9,7 +9,7 @@ if(isset($_POST['psw']) || isset($_SESSION['psw'])) {
     else {
         $psw = $_POST['psw'];
     }
-    include_once '../utils.php';
+    include_once __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'utils.php';
 
     $conn = Utils::connecter();
 
@@ -31,11 +31,11 @@ if ($login == false) {
 }
 ?>
 
-<?php include './getnavbar.inc.php'; ?>
+<?php include __DIR__ . DIRECTORY_SEPARATOR . 'getnavbar.inc.php'; ?>
 <!DOCTYPE html>
 <html>
     <head>
-        <?php include '../head.inc.php'; ?>
+        <?php include __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'head.inc.php'; ?>
         <meta charset="UTF-8">
         <title>Dashboard Admin</title>
         <link rel="icon" type="image/png" href = "logo.png">

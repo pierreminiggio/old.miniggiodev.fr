@@ -1,7 +1,7 @@
 <?php
 $avanttitre = "&nbsp;|&nbsp;&nbsp;";
 $aprestitre = "&nbsp;&nbsp;|&nbsp;";
-$titrebienvenue = "Bienvenue sur la dashboard!";
+$titrebienvenue = "Bienvenue sur le dashboard!";
 $titrearticles = "Articles";
 
 if (isset($_GET['onglet'])) {
