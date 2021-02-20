@@ -22,6 +22,12 @@ if (! $authHeader || $authHeader !== 'Bearer ' . $validToken) {
 require __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 
 $fetcher = (new DatabaseFetcherFactory())->make();
-var_dump($fetcher);
 
+$likes = $fetcher->query(
+    $fetcher
+        ->createQuery('social__youtube')
+        ->select('id', 'youtubeid as youtube_id', 'title', 'channel_id')
+        ->where('channel_id IS NOT NULL AND videoed_at IS NULL')
+)
+var_dump($likes);
 exit;
