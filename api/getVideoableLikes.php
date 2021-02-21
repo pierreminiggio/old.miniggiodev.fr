@@ -64,6 +64,7 @@ foreach ($likes as &$like) {
     $channelInfos = $channelInfos[$channelId];
     $like['channel_name'] = ! empty($channelInfos) && ! empty($channelInfos['title']) ? $channelInfos['title'] : null;
     $like['channel_country'] = ! empty($channelInfos) && ! empty($channelInfos['country']) ? $channelInfos['country'] : null;
+    $like['channel_photo'] = ! empty($channelInfos) && ! empty($channelInfos['photo']) ? $channelInfos['photo'] : null;
 }
 
 http_response_code(200);
