@@ -2,7 +2,7 @@
 
 use App\Database\DatabaseFetcherFactory;
 
-$authHeader = $_SERVER['HTTP_AUTHORIZATION'];
+$authHeader = $_SERVER['HTTP_AUTHORIZATION'] ?? null;
 
 $config = require
     __DIR__
@@ -35,6 +35,35 @@ $likes = array_map(fn (array $entry) => [
         ->where('channel_id IS NOT NULL AND videoed_at IS NULL')
         ->orderBy('created_at')
 ));
+
+$channelInfos = [];
+
+foreach ($likes as &$like) {
+    $channelId = $like['channel_id'];
+    if (! in_array($channelId, array_keys($channelInfos))) {
+        $infos = [];
+        
+        $curl = curl_init();
+        curl_setopt_array($curl, [
+            CURLOPT_RETURNTRANSFER => 1,
+            CURLOPT_URL => 'https://youtube-channel-infos-api.miniggiodev.fr/' . $channelId
+        ]);
+
+        $result = curl_exec($curl);
+
+        if (! empty($result)) {
+            $jsonResult = json_decode($result, true);
+            if (! empty($jsonResult)) {
+                $infos = $jsonResult;
+            }
+        }
+
+        $channelInfos[$channelId] = $infos;
+    }
+
+    $channelInfos = $channelInfos[$channelId];
+    $like['channel_name'] = ! empty($channelInfos) && ! empty($channelInfos['title']) ? $channelInfos['title'] : null;
+}
 
 http_response_code(200);
 echo json_encode($likes);
