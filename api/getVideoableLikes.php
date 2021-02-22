@@ -1,6 +1,7 @@
 <?php
 
 use App\Database\DatabaseFetcherFactory;
+use PierreMiniggio\DatabaseConnection\DatabaseConnection;
 
 $authHeader = $_SERVER['HTTP_AUTHORIZATION'] ?? null;
 
@@ -21,7 +22,7 @@ if (! $authHeader || $authHeader !== 'Bearer ' . $validToken) {
 
 require __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 
-$fetcher = (new DatabaseFetcherFactory())->make();
+$fetcher = (new DatabaseFetcherFactory())->make(DatabaseConnection::UTF8_MB4);
 
 $likes = array_map(fn (array $entry) => [
     'id' => (int) $entry['id'],
