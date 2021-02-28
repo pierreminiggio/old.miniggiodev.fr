@@ -21,7 +21,7 @@ $tweets = $fetcher->query(
     $fetcher
         ->createQuery($config['db']['site-db'] . '.social__publication')
         ->select('id_post as id', 'texte_brut as content')
-        ->orderBy('date_publication as published_at', Query::ORDER_BY_DESC)
+        ->orderBy('date_publication', Query::ORDER_BY_DESC)
         ->limit($limit, $offset)
 );
 
