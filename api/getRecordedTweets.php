@@ -20,11 +20,16 @@ $config = ConfigProvider::get();
 $tweets = $fetcher->query(
     $fetcher
         ->createQuery($config['db']['site-db'] . '.social__publication')
-        ->select('id_post as id', 'texte_brut as content')
+        ->select('id_post', 'texte_brut')
         ->orderBy('date_publication', Query::ORDER_BY_DESC)
         ->limit($limit, $offset)
 );
 
 http_response_code(200);
-echo json_encode($tweets);
+echo json_encode(array_map(function (array $tweet) {
+    return [
+        'id' => (int) $tweet['id_post'],
+        'content' => $tweet['texte_brut']
+    ];
+}, $tweets));
 exit;
