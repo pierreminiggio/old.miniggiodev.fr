@@ -2,6 +2,7 @@
 
 namespace App\Database;
 
+use App\ConfigProvider;
 use PierreMiniggio\DatabaseConnection\DatabaseConnection;
 use PierreMiniggio\DatabaseFetcher\DatabaseFetcher;
 
@@ -13,15 +14,7 @@ class DatabaseFetcherFactory
     public function make(string $charset = DatabaseConnection::UTF8): DatabaseFetcher
     {
         if (! isset(static::$fetcher)) {
-            $config = require
-                __DIR__
-                . DIRECTORY_SEPARATOR
-                . '..'
-                . DIRECTORY_SEPARATOR
-                . '..'
-                . DIRECTORY_SEPARATOR
-                . 'config.php'
-            ;
+            $config = ConfigProvider::get();
             $dbConfig = $config['db'];
 
             static::$fetcher = new DatabaseFetcher(new DatabaseConnection(
