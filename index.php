@@ -11,7 +11,6 @@ $photo = "images/photo-pierre-miniggio.png";
         <meta property="og:site_name" content="Pierre Miniggio">
         <meta property="og:description" content="Développeur Web, Video Maker, Musicien!">
         <title><?=$page_title?></title>
-        <meta name="google-site-verification" content="qwxN79FnF4v7W6qSSxEUo5kVQdk66ltvQcrbbyjjckk" />
     </head>
     <body<?=$onloadbody?>>
         <div class="fond-onglet fond-<?=$onglet?>">
