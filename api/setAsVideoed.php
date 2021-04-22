@@ -18,11 +18,20 @@ if (empty($requestBody)) {
     exit;
 }
 
-$jsonRequestBody = json_decode($requestBody);
+$jsonRequestBody = json_decode($requestBody, true);
 if (empty($jsonRequestBody)) {
     http_response_code(400);
     echo json_encode(['error' => 'Bad JSON body']);
     exit;
 }
 
-var_dump($jsonRequestBody);
+if (! isset($jsonRequestBody['ids']) || ! is_array($jsonRequestBody['ids'])) {
+    http_response_code(400);
+    echo json_encode(['error' => 'Bad JSON body']);
+    exit;
+}
+
+$ids = array_map(fn (string $id): int => (int) $id, $jsonRequestBody['ids']);
+
+var_dump($ids);
+
