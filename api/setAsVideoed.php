@@ -33,5 +33,17 @@ if (! isset($jsonRequestBody['ids']) || ! is_array($jsonRequestBody['ids'])) {
 
 $ids = array_map(fn (string $id): int => (int) $id, $jsonRequestBody['ids']);
 
-var_dump($ids);
+if (! $ids) {
+    http_response_code(204);
+    exit;
+}
 
+$fetcher->exec(
+    $fetcher
+        ->createQuery('social__youtube')
+        ->update('videoed_at = NOW()')
+        ->where('videoed_at IS NULL AND id IN(' . implode(', ', $ids) . ')')
+);
+
+http_response_code(204);
+exit;
