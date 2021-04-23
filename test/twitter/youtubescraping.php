@@ -35,6 +35,8 @@ $config = require
 
 $dbConfig = $config['db'];
 
+$instantTweet = false;
+
 // Channels I don't want to share videos from
 $channelQueryConnection = Utils::connecter();
 $channelQuery = "SELECT youtube_id FROM " . $dbConfig['channel-storage-db'] . ".youtube_channel";
@@ -160,10 +162,15 @@ foreach ($likes as $like) {
                 : ''
             ) . ' "' . $title . '" ' . $watchVideo
         ;
-        if (! empty(json_decode(updateStatus($status))->created_at)) {
-            echo '<br>Tweet posté : ' . $status;
+
+        if ($instantTweet) {
+            if (! empty(json_decode(updateStatus($status))->created_at)) {
+                echo '<br>Tweet posté : ' . $status;
+            } else {
+                echo '<br>Erreur en tentant de poster : ' . $status;
+            }
         } else {
-            echo '<br>Erreur en tentant de poster : ' . $status;
+            echo '<br>Tweet que j\'aurais posté si j\'avais pas désactivé les Tweets instant : ' . $status;
         }
     }
 
