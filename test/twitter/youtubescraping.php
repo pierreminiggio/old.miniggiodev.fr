@@ -94,7 +94,7 @@ if (! empty($jsonResponse->error)) {
     exit();
 }
 
-$likes = $jsonResponse->items;
+$likes = array_reverse($jsonResponse->items);
 
 foreach ($likes as $like) {
 
