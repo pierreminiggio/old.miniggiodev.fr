@@ -113,7 +113,16 @@ function d_insert_post($post, $idsrc){
 
     $conn = Utils::connecter();
 
-    $sql="SELECT * FROM social__publication WHERE id_publication_source ='".$id."'";
+    $config = require
+        __DIR__
+        . DIRECTORY_SEPARATOR
+        . '..'
+        . DIRECTORY_SEPARATOR
+        . 'config.php'
+    ;
+    $dbConfig = $config['db'];
+
+    $sql="SELECT * FROM " . $dbConfig['site-db']  . ".social__publication WHERE id_publication_source ='".$id."'";
 
     $result = Utils::querySQL($sql, $conn);
 
@@ -135,7 +144,15 @@ function d_insert_post($post, $idsrc){
 
         $conn = Utils::connecter();
 
-        $sql = "INSERT INTO social__publication (json, texte_brut, texte_html, id_publication_source, date_publication) VALUES (".$conn->quote($json).", ".$conn->quote($texte_brut).", ".$conn->quote($texte_html).", '".$id."', '".$date_publication."')";
+        $config = require
+            __DIR__
+            . DIRECTORY_SEPARATOR
+            . '..'
+            . DIRECTORY_SEPARATOR
+            . 'config.php'
+        ;
+        $dbConfig = $config['db'];
+        $sql = "INSERT INTO " . $dbConfig['site-db'] . ".social__publication (json, texte_brut, texte_html, id_publication_source, date_publication) VALUES (".$conn->quote($json).", ".$conn->quote($texte_brut).", ".$conn->quote($texte_html).", '".$id."', '".$date_publication."')";
 
         Utils::execSQL($sql, $conn);
 

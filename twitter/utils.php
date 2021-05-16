@@ -18,7 +18,7 @@ class Utils{
 
         try {
             $conn = new PDO(
-                'mysql:host=' . $dbConfig['host'] . ';dbname=' . $dbConfig['site-db'] . ';charset=utf8',
+                'mysql:host=' . $dbConfig['host'] . ';dbname=' . $dbConfig['site-db'] . ';charset=utf8mb4',
                 $dbConfig['username'],
                 $dbConfig['password']
             );
@@ -56,7 +56,7 @@ class Utils{
             return $result;
 
         } catch (PDOException $ex) {
-
+            var_dump($ex);
             echo "Erreur SQL";
 
         }
@@ -74,7 +74,7 @@ class Utils{
             $conn->exec($sql);
 
         } catch (PDOException $ex) {
-
+            var_dump($ex);
             echo "Erreur SQL";
 
         }
