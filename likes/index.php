@@ -3,6 +3,7 @@
 use App\Database\DatabaseFetcherFactory;
 use App\Query\ChannelInfosQuery;
 use App\Query\ChannelTwitterQuery;
+use NeutronStars\Database\Query;
 use PierreMiniggio\DatabaseConnection\DatabaseConnection;
 
 $protocol = isset($_SERVER['HTTPS']) ? 'https' : 'http';
@@ -18,11 +19,26 @@ require __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'vendor' . 
 
 $fetcher = (new DatabaseFetcherFactory())->make(DatabaseConnection::UTF8_MB4);
 
-$today = new DateTimeImmutable((new DateTimeImmutable())->format('Y-m-d'));
-$displayDates = function(?string $error = null) use ($likeUrl, $today): void
+$oneDayInterval = new DateInterval('P1D');
+$getMostRecentVideoDay = function () use ($fetcher, $oneDayInterval): DateTimeInterface {
+    return new DateTimeImmutable((new DateTimeImmutable($fetcher->query(
+        $fetcher->createQuery(
+            'social__youtube'
+        )->select(
+            'videoed_at'
+        )->orderBy(
+            'videoed_at',
+            Query::ORDER_BY_DESC
+        )->limit(
+            1
+        )
+    )[0]['videoed_at']))->sub($oneDayInterval)->format('Y-m-d'));
+};
+
+$displayDates = function(?string $error = null) use ($likeUrl, $getMostRecentVideoDay): void
 {
     $title = 'Le choix dans la date';
-    $exampleDateUrl = $likeUrl . $today->modify('-2 days')->format('Y-m-d');
+    $exampleDateUrl = $likeUrl . $getMostRecentVideoDay()->format('Y-m-d');
 
     if ($error) {
         $error = str_replace('\'', '\\\'', $error);
@@ -73,12 +89,24 @@ try {
 } catch (Exception) {
     $displayDates('La date entrée est incorrecte');
 }
-$oneDayInterval = new DateInterval('P1D');
-$yesterday = $today->sub($oneDayInterval);
+
+$mostRecentVideoDay = new DateTimeImmutable((new DateTimeImmutable($fetcher->query(
+    $fetcher->createQuery(
+        'social__youtube'
+    )->select(
+        'videoed_at'
+    )->orderBy(
+        'videoed_at',
+        Query::ORDER_BY_DESC
+    )->limit(
+        1
+    )
+)[0]['videoed_at']))->sub($oneDayInterval)->format('Y-m-d'));
+
 $videoedDay = $date->add($oneDayInterval);
 
-$areLikesAlreadyThereForThisDate = function (DateTimeInterface $dateToCheck) use ($yesterday): bool {
-    return $dateToCheck <= $yesterday;
+$areLikesAlreadyThereForThisDate = function (DateTimeInterface $dateToCheck) use ($mostRecentVideoDay): bool {
+    return $dateToCheck <= $mostRecentVideoDay;
 };
 
 if (! $areLikesAlreadyThereForThisDate($date)) {
