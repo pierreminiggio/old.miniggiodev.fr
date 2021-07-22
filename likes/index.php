@@ -18,9 +18,31 @@ require __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'vendor' . 
 
 $fetcher = (new DatabaseFetcherFactory())->make(DatabaseConnection::UTF8_MB4);
 
-$displayDates = function(): void
+$displayDates = function() use ($likeUrl): void
 {
-    echo 'Pour visualiser les likes, choisissez une date, exemple : ';
+    $title = 'Le choix dans la date';
+    $exampleDateUrl = $likeUrl . (new DateTimeImmutable())->modify('-2 days')->format('Y-m-d');
+
+    echo <<<HTML
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>$title</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    </head>
+    <body>
+        <nav style="width: 100%;" class="orange darken-2 grey-text text-lighten-3">
+            <p style="text-align: center;">$title</p>
+        </nav>
+        <h1 style="text-align: center;">$title</h1>
+        <p style="text-align: center;">Pour visualiser les likes, choisissez une date, exemple : <a href="$exampleDateUrl">$exampleDateUrl</a></p>
+    </body>
+    </html>
+    HTML;
     exit;
 };
 
@@ -52,11 +74,10 @@ $htmlLikes = '';
 if (! count($fetchedLikes)) {
     $htmlLikes = <<<HTML
         <h2 style="text-align: center;">Rien du tout mdr</h2>
+        <p style="text-align: center;">(D'après mon bot, autant il a juste pas tourné ce jour-là...)</p>
     HTML;
     goto render;
 }
-
-render:
 
 $htmlLikes .= <<<HTML
     <ul class="collection">
@@ -184,8 +205,9 @@ $htmlLikes .= <<<HTML
     </ul>
 HTML;
 
+render:
 $title = 'Ce que j\'ai regardé le ' . $date->format('d/m/Y');
-$likeDateWarningHtml = $isAnyVideoLikedAnotherDay ? <<<HTML
+$likeDateWarningHtml = ! empty($isAnyVideoLikedAnotherDay) ? <<<HTML
     <p style="text-align: center;">S'il y a une date de like d'indiquée, c'est que mon bot a du retard sur la réalité, sûrement car il n'a pas tourné quelques jours :P</p>
 HTML : '';
 
