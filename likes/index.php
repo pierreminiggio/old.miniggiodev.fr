@@ -18,10 +18,25 @@ require __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'vendor' . 
 
 $fetcher = (new DatabaseFetcherFactory())->make(DatabaseConnection::UTF8_MB4);
 
-$displayDates = function() use ($likeUrl): void
+$today = new DateTimeImmutable((new DateTimeImmutable())->format('Y-m-d'));
+$displayDates = function(?string $error = null) use ($likeUrl, $today): void
 {
     $title = 'Le choix dans la date';
-    $exampleDateUrl = $likeUrl . (new DateTimeImmutable())->modify('-2 days')->format('Y-m-d');
+    $exampleDateUrl = $likeUrl . $today->modify('-2 days')->format('Y-m-d');
+
+    if ($error) {
+        $error = str_replace('\'', '\\\'', $error);
+    }
+
+    $errorScript = $error ? <<<HTML
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+        <script>
+            M.toast({
+                html: '$error',
+                classes: 'red'
+            })
+        </script>
+    HTML : '';
 
     echo <<<HTML
     <!DOCTYPE html>
@@ -36,10 +51,11 @@ $displayDates = function() use ($likeUrl): void
     </head>
     <body>
         <nav style="width: 100%;" class="orange darken-2 grey-text text-lighten-3">
-            <p style="text-align: center;">$title</p>
+            <p style="text-align: center; margin: 0;">$title</p>
         </nav>
         <h1 style="text-align: center;">$title</h1>
         <p style="text-align: center;">Pour visualiser les likes, choisissez une date, exemple : <a href="$exampleDateUrl">$exampleDateUrl</a></p>
+        $errorScript
     </body>
     </html>
     HTML;
@@ -55,10 +71,19 @@ if ($dateParam === null) {
 try {
     $date = new DateTimeImmutable((new DateTimeImmuTable($dateParam))->format('Y-m-d'));
 } catch (Exception) {
-    $displayDates();
+    $displayDates('La date entrée est incorrecte');
 }
+$oneDayInterval = new DateInterval('P1D');
+$yesterday = $today->sub($oneDayInterval);
+$videoedDay = $date->add($oneDayInterval);
 
-$videoedDay = $date->add(new DateInterval('P1D'));
+$areLikesAlreadyThereForThisDate = function (DateTimeInterface $dateToCheck) use ($yesterday): bool {
+    return $dateToCheck <= $yesterday;
+};
+
+if (! $areLikesAlreadyThereForThisDate($date)) {
+    $displayDates('Les likes ne sont pas encore traités pour cette date');
+}
 
 $fetchedLikes = $fetcher->query(
     $fetcher
@@ -211,6 +236,15 @@ $likeDateWarningHtml = ! empty($isAnyVideoLikedAnotherDay) ? <<<HTML
     <p style="text-align: center;">S'il y a une date de like d'indiquée, c'est que mon bot a du retard sur la réalité, sûrement car il n'a pas tourné quelques jours :P</p>
 HTML : '';
 
+$nextDate = $date->modify('+1 day');
+
+$NextDateHtml = $areLikesAlreadyThereForThisDate($nextDate) ? <<<HTML
+    <a
+        href="$likeUrl{$nextDate->format('Y-m-d')}"
+        style="flex: auto 0; padding: 0 20px;"
+    >Après -></a>
+HTML : '';
+
 echo <<<HTML
 <!DOCTYPE html>
 <html lang="en">
@@ -228,10 +262,7 @@ echo <<<HTML
             href="$likeUrl{$date->modify('-1 day')->format('Y-m-d')}"
             style="flex: auto 0; padding: 0 20px;"
         ><- Avant</a>
-        <a
-            href="$likeUrl{$date->modify('+1 day')->format('Y-m-d')}"
-            style="flex: auto 0; padding: 0 20px;"
-        >Après -></a>
+        $NextDateHtml
     </nav>
     <h1 style="text-align: center;">$title</h1>
     $likeDateWarningHtml
