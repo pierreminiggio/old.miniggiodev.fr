@@ -5,6 +5,15 @@ use App\Query\ChannelInfosQuery;
 use App\Query\ChannelTwitterQuery;
 use PierreMiniggio\DatabaseConnection\DatabaseConnection;
 
+$protocol = isset($_SERVER['HTTPS']) ? 'https' : 'http';
+$host = $protocol . '://' . $_SERVER['HTTP_HOST'];
+if (str_ends_with($host, '/')) {
+    $host = substr($host, 0, -1);
+}
+
+$likePath = explode('?', $_SERVER['REQUEST_URI'])[0];
+$likeUrl = $host . $likePath . '?date=';
+
 require __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 
 $fetcher = (new DatabaseFetcherFactory())->make(DatabaseConnection::UTF8_MB4);
@@ -180,7 +189,6 @@ $likeDateWarningHtml = $isAnyVideoLikedAnotherDay ? <<<HTML
     <p style="text-align: center;">S'il y a une date de like d'indiquée, c'est que mon bot a du retard sur la réalité, sûrement car il n'a pas tourné quelques jours :P</p>
 HTML : '';
 
-
 echo <<<HTML
 <!DOCTYPE html>
 <html lang="en">
@@ -193,7 +201,16 @@ echo <<<HTML
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
-
+    <nav style="display: flex; justify-content: space-between;" class="orange darken-2 grey-text text-lighten-3">
+        <a
+            href="$likeUrl{$date->modify('-1 day')->format('Y-m-d')}"
+            style="flex: auto 0;"
+        ><- Avant</a>
+        <a
+            href="$likeUrl{$date->modify('+1 day')->format('Y-m-d')}"
+            style="flex: auto 0;"
+        >Après -></a>
+    </nav>
     <h1 style="text-align: center;">$title</h1>
     $likeDateWarningHtml
     $htmlLikes
