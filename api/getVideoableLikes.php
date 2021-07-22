@@ -1,6 +1,7 @@
 <?php
 
 use App\Database\DatabaseFetcherFactory;
+use App\Query\ChannelInfosQuery;
 use App\Security\BearerTokenChecker;
 use PierreMiniggio\DatabaseConnection\DatabaseConnection;
 
@@ -29,34 +30,24 @@ $likes = array_map(fn (array $entry) => [
 ));
 
 $channelInfos = [];
+$channelInfosQuery = new ChannelInfosQuery();
 
 foreach ($likes as &$like) {
     $channelId = $like['channel_id'];
-    if (! in_array($channelId, array_keys($channelInfos))) {
-        $infos = [];
-        
-        $curl = curl_init();
-        curl_setopt_array($curl, [
-            CURLOPT_RETURNTRANSFER => 1,
-            CURLOPT_URL => 'https://youtube-channel-infos-api.miniggiodev.fr/' . $channelId
-        ]);
-
-        $result = curl_exec($curl);
-
-        if (! empty($result)) {
-            $jsonResult = json_decode($result, true);
-            if (! empty($jsonResult)) {
-                $infos = $jsonResult;
-            }
+    if ($channelId && ! in_array($channelId, array_keys($channelInfos))) {
+        try {
+            $infos = $channelInfosQuery->execute($channelId);
+        } catch (Exception) {
+            $infos = null;
         }
 
         $channelInfos[$channelId] = $infos;
     }
 
-    $channelInfos = $channelInfos[$channelId];
-    $like['channel_name'] = ! empty($channelInfos) && ! empty($channelInfos['title']) ? $channelInfos['title'] : null;
-    $like['channel_country'] = ! empty($channelInfos) && ! empty($channelInfos['country']) ? $channelInfos['country'] : null;
-    $like['channel_photo'] = ! empty($channelInfos) && ! empty($channelInfos['photo']) ? $channelInfos['photo'] : null;
+    $infos = $channelInfos[$channelId];
+    $like['channel_name'] = ! empty($infos) && ! empty($infos['title']) ? $infos['title'] : null;
+    $like['channel_country'] = ! empty($infos) && ! empty($infos['country']) ? $infos['country'] : null;
+    $like['channel_photo'] = ! empty($infos) && ! empty($infos['photo']) ? $infos['photo'] : null;
 }
 
 http_response_code(200);
