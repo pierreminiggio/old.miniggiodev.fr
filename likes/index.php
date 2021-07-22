@@ -126,10 +126,6 @@ foreach ($fetchedLikes as $fetchedLike) {
 
     $channelTwitter = $channelsTwitter[$channelId];
 
-    $brIfNeeded = $channelHtml ? <<<HTML
-        <br>
-    HTML : '';
-
     $twitterHtml = $channelTwitter ? <<<HTML
         <a
             href="https://twitter.com/$channelTwitter"
@@ -137,6 +133,10 @@ foreach ($fetchedLikes as $fetchedLike) {
             class="tooltipped"
             $checkTwitterToolTip
         >🐦 $channelTwitter</a>
+    HTML : '';
+
+    $brIfNeeded = $channelHtml && $twitterHtml ? <<<HTML
+        <br>
     HTML : '';
 
     $htmlLikes .= <<<HTML
