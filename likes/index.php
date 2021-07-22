@@ -13,10 +13,6 @@ if (str_ends_with($host, '/')) {
 }
 
 $likePath = explode('?', $_SERVER['REQUEST_URI'])[0];
-if ($likePath === '/') {
-    $likePath = '';
-}
-
 $likeUrl = $host . $likePath . '?date=';
 
 require __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
