@@ -20,6 +20,20 @@ require __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'vendor' . 
 $fetcher = (new DatabaseFetcherFactory())->make(DatabaseConnection::UTF8_MB4);
 
 $oneDayInterval = new DateInterval('P1D');
+
+$getOldestLikeDay = function () use ($fetcher): DateTimeInterface {
+    return new DateTimeImmutable((new DateTimeImmutable($fetcher->query(
+        $fetcher->createQuery(
+            'social__youtube'
+        )->select(
+            'created_at'
+        )->orderBy(
+            'created_at'
+        )->limit(
+            1
+        )
+    )[0]['created_at']))->format('Y-m-d'));
+};
 $getMostRecentVideoDay = function () use ($fetcher, $oneDayInterval): DateTimeInterface {
     return new DateTimeImmutable((new DateTimeImmutable($fetcher->query(
         $fetcher->createQuery(
@@ -35,10 +49,17 @@ $getMostRecentVideoDay = function () use ($fetcher, $oneDayInterval): DateTimeIn
     )[0]['videoed_at']))->sub($oneDayInterval)->format('Y-m-d'));
 };
 
-$displayDates = function(?string $error = null) use ($likeUrl, $getMostRecentVideoDay): void
+$oldestLikeDay = $getOldestLikeDay();
+$mostRecentVideoDay = $getMostRecentVideoDay();
+$displayDates = function(?string $error = null) use ($likeUrl, $oldestLikeDay, $mostRecentVideoDay): void
 {
     $title = 'Le choix dans la date';
-    $exampleDateUrl = $likeUrl . $getMostRecentVideoDay()->format('Y-m-d');
+    $displayDate = function (DateTimeInterface $date) use ($likeUrl): string {
+        $dateUrl = $likeUrl . $date->format('Y-m-d');
+        return <<<HTML
+            <a href="$dateUrl">{$date->format('d/m/Y')}</a>
+        HTML;
+    };
 
     if ($error) {
         $error = str_replace('\'', '\\\'', $error);
@@ -70,7 +91,7 @@ $displayDates = function(?string $error = null) use ($likeUrl, $getMostRecentVid
             <p style="text-align: center; margin: 0;">$title</p>
         </nav>
         <h1 style="text-align: center;">$title</h1>
-        <p style="text-align: center;">Pour visualiser les likes, choisissez une date, exemple : <a href="$exampleDateUrl">$exampleDateUrl</a></p>
+        <p style="text-align: center;">Pour visualiser les likes, choisissez une date entre {$displayDate($oldestLikeDay)} et {$displayDate($mostRecentVideoDay)}</p>
         $errorScript
     </body>
     </html>
@@ -90,19 +111,6 @@ try {
     $displayDates('La date entrée est incorrecte');
 }
 
-$mostRecentVideoDay = new DateTimeImmutable((new DateTimeImmutable($fetcher->query(
-    $fetcher->createQuery(
-        'social__youtube'
-    )->select(
-        'videoed_at'
-    )->orderBy(
-        'videoed_at',
-        Query::ORDER_BY_DESC
-    )->limit(
-        1
-    )
-)[0]['videoed_at']))->sub($oneDayInterval)->format('Y-m-d'));
-
 $videoedDay = $date->add($oneDayInterval);
 
 $areLikesAlreadyThereForThisDate = function (DateTimeInterface $dateToCheck) use ($mostRecentVideoDay): bool {
@@ -111,6 +119,14 @@ $areLikesAlreadyThereForThisDate = function (DateTimeInterface $dateToCheck) use
 
 if (! $areLikesAlreadyThereForThisDate($date)) {
     $displayDates('Les likes ne sont pas encore traités pour cette date');
+}
+
+$wereLikesAlreadyRecorded = function (DateTimeInterface $date) use ($oldestLikeDay): bool {
+    return $date >= $oldestLikeDay;
+};
+
+if (! $wereLikesAlreadyRecorded($date)) {
+    $displayDates('Les likes n\'étaient pas encore enregistrés à cette époque');
 }
 
 $fetchLikesBetweenDates = function (string $start, string $end, string $dateField) use ($fetcher): array {
@@ -298,14 +314,24 @@ $isVideoBotActiveHtml = ! $isVideoBotActive ? <<<HTML
     <p style="text-align: center;">Le bot qui tweet tout seul chaque jour n'était pas encore actif à ce moment là. Ça tweetait individuellement chaque vidéo dans l'heure :P</p>
 HTML : '';
 
-$nextDate = $date->modify('+1 day');
+$previousDate = $date->sub($oneDayInterval);
+$isPreviousDateDisplayed = $wereLikesAlreadyRecorded($previousDate);
+$previousDateHtml = $isPreviousDateDisplayed ? <<<HTML
+    <a
+        href="$likeUrl{$previousDate->format('Y-m-d')}"
+        style="flex: auto 0; padding: 0 20px;"
+    ><- Avant</a>
+HTML : '';
 
-$NextDateHtml = $areLikesAlreadyThereForThisDate($nextDate) ? <<<HTML
+$nextDate = $date->add($oneDayInterval);
+$nextDateHtml = $areLikesAlreadyThereForThisDate($nextDate) ? <<<HTML
     <a
         href="$likeUrl{$nextDate->format('Y-m-d')}"
         style="flex: auto 0; padding: 0 20px;"
     >Après -></a>
 HTML : '';
+
+$navJustifyContentStrategy = $isPreviousDateDisplayed ? 'space-between' : 'flex-end';
 
 echo <<<HTML
 <!DOCTYPE html>
@@ -319,12 +345,9 @@ echo <<<HTML
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
-    <nav style="display: flex; justify-content: space-between;" class="orange darken-2 grey-text text-lighten-3">
-        <a
-            href="$likeUrl{$date->modify('-1 day')->format('Y-m-d')}"
-            style="flex: auto 0; padding: 0 20px;"
-        ><- Avant</a>
-        $NextDateHtml
+    <nav style="display: flex; justify-content: $navJustifyContentStrategy;" class="orange darken-2 grey-text text-lighten-3">
+        $previousDateHtml
+        $nextDateHtml
     </nav>
     <h1 style="text-align: center;">$title</h1>
     $likeDateWarningHtml$isVideoBotActiveHtml
