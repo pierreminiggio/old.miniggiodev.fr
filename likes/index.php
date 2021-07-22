@@ -85,21 +85,40 @@ if (! $areLikesAlreadyThereForThisDate($date)) {
     $displayDates('Les likes ne sont pas encore traités pour cette date');
 }
 
-$fetchedLikes = $fetcher->query(
-    $fetcher
-        ->createQuery('social__youtube')
-        ->select( 'youtubeid', 'title', 'channel_id', 'created_at as liked_at')
-        ->where('videoed_at >= :start_of_the_day AND videoed_at <= :end_of_the_day')
-        ->orderBy('created_at')
-    ,
-    ['start_of_the_day' => $videoedDay->format('Y-m-d H:i:s'), 'end_of_the_day' => $videoedDay->format('Y-m-d') . ' 23:59:59']
+$fetchLikesBetweenDates = function (string $start, string $end, string $dateField) use ($fetcher): array {
+    return $fetcher->query(
+        $fetcher
+            ->createQuery('social__youtube')
+            ->select( 'youtubeid', 'title', 'channel_id', 'created_at as liked_at')
+            ->where($dateField . ' >= :start AND ' . $dateField . ' <= :end')
+            ->orderBy('created_at')
+        ,
+        ['start' => $start, 'end' => $end]
+    );
+};
+
+$firstVideoDate = new DateTimeImmutable('2021-04-23');
+$isVideoBotActive = $firstVideoDate < $videoedDay;
+$fetchedLikes = $isVideoBotActive ? $fetchLikesBetweenDates(
+    $videoedDay->format('Y-m-d H:i:s'),
+    $videoedDay->format('Y-m-d') . ' 23:59:59',
+    'videoed_at'
+) : $fetchLikesBetweenDates(
+    $date->format('Y-m-d H:i:s'),
+    $date->format('Y-m-d') . ' 23:59:59',
+    'created_at'
 );
 
 $htmlLikes = '';
 if (! count($fetchedLikes)) {
+    $emptyReason = $isVideoBotActive ? <<<HTML
+        (D'après mon bot, autant il a juste pas tourné ce jour-là, ou bien j'avais dépassé le quota de l'API Youtube et pas encore réactivé...)
+    HTML :<<<HTML
+        (Ou bien j'avais probablement dépassé le quota de l'API Youtube et pas encore réactivé...)
+    HTML;
     $htmlLikes = <<<HTML
         <h2 style="text-align: center;">Rien du tout mdr</h2>
-        <p style="text-align: center;">(D'après mon bot, autant il a juste pas tourné ce jour-là...)</p>
+        <p style="text-align: center;">$emptyReason</p>
     HTML;
     goto render;
 }
@@ -158,9 +177,12 @@ foreach ($fetchedLikes as $fetchedLike) {
         }
     }
 
-    $channelInfos = $channelsInfos[$channelId];
+    $channelInfos = $channelsInfos[$channelId] ?? null;
     $channelName = ! empty($channelInfos) && ! empty($channelInfos['title']) ? $channelInfos['title'] : null;
-    $channelPhoto = ! empty($channelInfos) && ! empty($channelInfos['photo']) ? $channelInfos['photo'] : null;
+    $channelPhoto = ! empty($channelInfos) && ! empty($channelInfos['photo'])
+        ? $channelInfos['photo']
+        : 'https://youtube-channel-infos-api.miniggiodev.fr/placeholder.png'
+    ;
 
     $channelHtml = $channelId ? <<<HTML
         <a
@@ -179,7 +201,7 @@ foreach ($fetchedLikes as $fetchedLike) {
         }
     }
 
-    $channelTwitter = $channelsTwitter[$channelId];
+    $channelTwitter = $channelsTwitter[$channelId] ?? null;
 
     $twitterHtml = $channelTwitter ? <<<HTML
         <a
@@ -194,18 +216,26 @@ foreach ($fetchedLikes as $fetchedLike) {
         <br>
     HTML : '';
 
+    $htmlChannelPhoto = <<<HTML
+        <img
+            src="$channelPhoto"
+            alt="Photo de la chaîne de $channelName"
+            class="circle"
+        >
+    HTML;
+
+    $htmlChannelPhotoWithMaybeLink = $channelId ? <<<HTML
+        <a
+            href="$channelLink"
+            target="_blank"
+            class="tooltipped"
+            $checkChannelToolTip
+        >$htmlChannelPhoto</a>
+    HTML : $htmlChannelPhoto;
+
     $htmlLikes .= <<<HTML
         <li class="collection-item avatar">
-            <a
-                href="$channelLink"
-                target="_blank"
-                class="tooltipped"
-                $checkChannelToolTip
-            ><img
-                src="$channelPhoto"
-                alt="Photo de la chaîne de $channelName"
-                class="circle"
-            ></a>
+            $htmlChannelPhotoWithMaybeLink
             <span class="title"><a
                 href="$videoLink"
                 target="_blank"
@@ -234,6 +264,10 @@ render:
 $title = 'Ce que j\'ai regardé le ' . $date->format('d/m/Y');
 $likeDateWarningHtml = ! empty($isAnyVideoLikedAnotherDay) ? <<<HTML
     <p style="text-align: center;">S'il y a une date de like d'indiquée, c'est que mon bot a du retard sur la réalité, sûrement car il n'a pas tourné quelques jours :P</p>
+HTML : '';
+
+$isVideoBotActiveHtml = ! $isVideoBotActive ? <<<HTML
+    <p style="text-align: center;">Le bot qui tweet tout seul chaque jour n'était pas encore actif à ce moment là. Ça tweetait individuellement chaque vidéo dans l'heure :P</p>
 HTML : '';
 
 $nextDate = $date->modify('+1 day');
@@ -265,7 +299,7 @@ echo <<<HTML
         $NextDateHtml
     </nav>
     <h1 style="text-align: center;">$title</h1>
-    $likeDateWarningHtml
+    $likeDateWarningHtml$isVideoBotActiveHtml
     $htmlLikes
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script>
