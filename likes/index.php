@@ -226,11 +226,11 @@ echo <<<HTML
     <nav style="display: flex; justify-content: space-between;" class="orange darken-2 grey-text text-lighten-3">
         <a
             href="$likeUrl{$date->modify('-1 day')->format('Y-m-d')}"
-            style="flex: auto 0;"
+            style="flex: auto 0; padding: 0 20px;"
         ><- Avant</a>
         <a
             href="$likeUrl{$date->modify('+1 day')->format('Y-m-d')}"
-            style="flex: auto 0;"
+            style="flex: auto 0; padding: 0 20px;"
         >Après -></a>
     </nav>
     <h1 style="text-align: center;">$title</h1>
