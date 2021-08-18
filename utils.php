@@ -14,7 +14,7 @@ class Utils
         $conn = null;
         try {
             $conn = new PDO(
-                'mysql:host=' . $dbConfig['host'] . ';dbname=' . $dbConfig['site-db'] . ';charset=utf8',
+                'mysql:host=' . $dbConfig['host'] . ';dbname=' . $dbConfig['site-db'] . ';charset=utf8mb4',
                 $dbConfig['username'],
                 $dbConfig['password']
             );
