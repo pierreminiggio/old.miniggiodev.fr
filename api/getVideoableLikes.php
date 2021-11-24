@@ -23,7 +23,7 @@ $likes = array_map(fn (array $entry) => [
         ->createQuery('social__youtube')
         ->select('id', 'youtubeid', 'title', 'channel_id')
         ->where('channel_id IS NOT NULL AND videoed_at IS NULL AND created_at < :today_at_midnight')
-        ->orderBy('created_at')
+        ->orderBy('id')
         ->limit(50)
     ,
     ['today_at_midnight' => $today->format('Y-m-d') . ' 00:00:00']
