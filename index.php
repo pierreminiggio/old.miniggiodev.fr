@@ -22,7 +22,7 @@ $photo = "images/photo-pierre-miniggio.png";
             position: fixed;
             width: 100%;
             text-align: center;
-            z-index: 1;
+            z-index: 2;
         "
     >Ce site n'est plus mis à jour depuis 2018, un nouveau site sera disponible (un jour peut être) en cliquant ici</a>
         <div class="fond-onglet fond-<?=$onglet?>">
