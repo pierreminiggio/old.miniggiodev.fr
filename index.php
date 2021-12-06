@@ -13,6 +13,18 @@ $photo = "images/photo-pierre-miniggio.png";
         <title><?=$page_title?></title>
     </head>
     <body<?=$onloadbody?>>
+    <a
+        href="https://miniggiodev.fr"
+        target="_blank"
+        style="
+            color: #FFF;
+            background-color: #F44336;
+            position: fixed;
+            width: 100%;
+            text-align: center;
+            z-index: 1;
+        "
+    >Ce site n'est plus mis à jour depuis 2018, un nouveau site sera disponible (un jour peut être) en cliquant ici</a>
         <div class="fond-onglet fond-<?=$onglet?>">
         <div id="mobile-pres" class="hide-on-large-only">
             <h1>Pierre Miniggio</h1>
