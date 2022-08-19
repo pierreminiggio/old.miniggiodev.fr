@@ -11,31 +11,22 @@ function d_get_timeline_data($settings) {
         require_once('TwitterAPI.php');
 
         $url = 'https://api.twitter.com/1.1/statuses/user_timeline.json';
-
         $getfield = '';
-
         $requestMethod = 'GET';
-
         $twitterjson = new TwitterAPI($settings);
-
-        $string = $twitterjson->setGetfield($getfield)
-
-                     ->buildOauth($url, $requestMethod)
-
-                     ->performRequest();
-
-
+        $string = $twitterjson
+            ->setGetfield($getfield)
+            ->buildOauth($url, $requestMethod)
+            ->performRequest()
+        ;
 
         return $string;
-
 }
 
 
 
 /**
-
  * Récupération de tous les posts d'un compte twitter
-
  */
 
 function d_get_posts()
@@ -49,23 +40,14 @@ function d_get_posts()
         . 'config.php'
     ;
     $settings = $config['twitter-api']['pierreminiggio'];
-
     $string = d_get_timeline_data($settings);
-
     $tweets = json_decode($string, true);
 
-
     foreach ($tweets as $tweet){
-
         $idsrc = $tweet['id_str'];
-
         echo 'check du post : '.$idsrc.'<br>';
-
         d_insert_post($tweet, $idsrc);
-
     }
-
-
 
     return $tweets;
 }
@@ -77,42 +59,29 @@ function d_get_posts()
 function d_insert_post($post, $idsrc){
 
     $id = $idsrc;
-
     $json = json_encode($post);
 
     $texte_brut = $post['text'];
     // on va construire le $texte_html
 
-
-
     $date = $post["created_at"];
-
     $date_publication = date("Y-m-d H:i:s", strtotime($date));
-
-
 
     // On récupère les divers éléments des tweets pour pouvoir changer l'html.
 
     $entities =  $post["entities"];
-
     $tab = d_generer_tab_entities($entities, $id);
-
-
-
     $texte_html = d_construire_tweet($texte_brut, d_ordonner_tableau($tab), $post);
-
 
     // On modifie le texte_brut APRES avoir créé l'html, pour ne pas fuck up les offsets
     $texte_brut = str_replace("J'ai ???? la vidéo", "J'ai aimé la vidéo", $texte_brut);
     $texte_brut = str_replace("J'ai 👍 la vidéo", "J'ai aimé la vidéo", $texte_brut);
-
 
     //On vérifie que l'ID du post n'est pas présent dans la base
 
     include_once 'utils.php';
 
     $conn = Utils::connecter();
-
     $config = require
         __DIR__
         . DIRECTORY_SEPARATOR
@@ -123,22 +92,18 @@ function d_insert_post($post, $idsrc){
     $dbConfig = $config['db'];
 
     $sql="SELECT * FROM " . $dbConfig['site-db']  . ".social__publication WHERE id_publication_source ='".$id."'";
-
     $result = Utils::querySQL($sql, $conn);
-
     $counter = 0;
 
     foreach ($result-> fetchAll() as $a) {
-
         $counter++;
-
     }
 
     Utils::deconnecter($conn);
 
     if($counter==0){
 
-        //On insère un post
+        // On insère un post
 
         include_once 'utils.php';
 
@@ -152,14 +117,24 @@ function d_insert_post($post, $idsrc){
             . 'config.php'
         ;
         $dbConfig = $config['db'];
-        $sql = "INSERT INTO " . $dbConfig['site-db'] . ".social__publication (json, texte_brut, texte_html, id_publication_source, date_publication) VALUES (".$conn->quote($json).", ".$conn->quote($texte_brut).", ".$conn->quote($texte_html).", '".$id."', '".$date_publication."')";
-
+        $sql =
+            "INSERT INTO "
+            . $dbConfig['site-db']
+            . ".social__publication (json, texte_brut, texte_html, id_publication_source, date_publication) VALUES ("
+            . $conn->quote($json)
+            . ", "
+            . $conn->quote($texte_brut)
+            . ", "
+            . $conn->quote($texte_html)
+            . ", '"
+            . $id
+            . "', '"
+            . $date_publication
+            . "')"
+        ;
         Utils::execSQL($sql, $conn);
-
         Utils::deconnecter($conn);
-
         echo "Post inséré<br>";
-
     }
 
     else {
@@ -173,11 +148,8 @@ function d_insert_post($post, $idsrc){
 // générer un tableau répertoriant la liste des modifications à effectuer sur le tweet
 function d_generer_tab_entities($entities, $id) {
 
-
-
     // Le tableau où seront répertoriées les entités
     $tab = [];
-
 
     // Les tags
     if (isset($entities["hashtags"]) && sizeof($entities["hashtags"])>0) {
@@ -218,7 +190,7 @@ function d_generer_tab_entities($entities, $id) {
     }
 
 
-    //symbols - todo maybe
+    // symbols - todo maybe
 
 
     // Les mentions
@@ -258,11 +230,8 @@ function d_generer_tab_entities($entities, $id) {
             ];
 
             $tab[] = $donnees;
-
         }
-
     }
-
 
 
     // Les urls
