@@ -1,9 +1,5 @@
 <?php
 
-
-
-
-
 // récupérer le json de la timeline d'un compte twitter
 
 function d_get_timeline_data($settings) {
@@ -128,7 +124,7 @@ function d_insert_post($post, $idsrc){
             . ", '"
             . $id
             . "', '"
-            . $in_reply_to_status_id
+            . ($in_reply_to_status_id ?? 'NULL')
             . "', '"
             . $date_publication
             . "')"
