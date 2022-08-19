@@ -52,10 +52,6 @@ function d_get_posts()
     return $tweets;
 }
 
-
-
-
-
 function d_insert_post($post, $idsrc){
 
     $id = $idsrc;
@@ -76,6 +72,9 @@ function d_insert_post($post, $idsrc){
     // On modifie le texte_brut APRES avoir créé l'html, pour ne pas fuck up les offsets
     $texte_brut = str_replace("J'ai ???? la vidéo", "J'ai aimé la vidéo", $texte_brut);
     $texte_brut = str_replace("J'ai 👍 la vidéo", "J'ai aimé la vidéo", $texte_brut);
+        
+    // A qui le tweet répond
+    $in_reply_to_status_id = $post['in_reply_to_status_id_str'] ?? null;
 
     //On vérifie que l'ID du post n'est pas présent dans la base
 
@@ -91,7 +90,7 @@ function d_insert_post($post, $idsrc){
     ;
     $dbConfig = $config['db'];
 
-    $sql="SELECT * FROM " . $dbConfig['site-db']  . ".social__publication WHERE id_publication_source ='".$id."'";
+    $sql = "SELECT * FROM " . $dbConfig['site-db']  . ".social__publication WHERE id_publication_source ='" . $id . "'";
     $result = Utils::querySQL($sql, $conn);
     $counter = 0;
 
@@ -120,7 +119,7 @@ function d_insert_post($post, $idsrc){
         $sql =
             "INSERT INTO "
             . $dbConfig['site-db']
-            . ".social__publication (json, texte_brut, texte_html, id_publication_source, date_publication) VALUES ("
+            . ".social__publication (json, texte_brut, texte_html, id_publication_source, in_reply_to_status_id, date_publication) VALUES ("
             . $conn->quote($json)
             . ", "
             . $conn->quote($texte_brut)
@@ -129,20 +128,17 @@ function d_insert_post($post, $idsrc){
             . ", '"
             . $id
             . "', '"
+            . $in_reply_to_status_id
+            . "', '"
             . $date_publication
             . "')"
         ;
         Utils::execSQL($sql, $conn);
         Utils::deconnecter($conn);
         echo "Post inséré<br>";
-    }
-
-    else {
-
+    } else {
         echo "Post déjà présent<br>";
-
     }
-
 }
 
 // générer un tableau répertoriant la liste des modifications à effectuer sur le tweet
