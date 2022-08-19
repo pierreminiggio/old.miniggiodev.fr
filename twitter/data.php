@@ -171,29 +171,23 @@ function d_insert_post($post, $idsrc){
 }
 
 // générer un tableau répertoriant la liste des modifications à effectuer sur le tweet
-
 function d_generer_tab_entities($entities, $id) {
 
 
 
     // Le tableau où seront répertoriées les entités
-
-    $tab = array();
-
+    $tab = [];
 
 
     // Les tags
-
     if (isset($entities["hashtags"]) && sizeof($entities["hashtags"])>0) {
 
         $hastags = $entities["hashtags"];
-
         $t = 0;
 
         foreach ($hastags as $hastag) {
 
             $t++;
-
             $nb = 0;
 
             foreach ($hastag["indices"] as $indice) {
@@ -201,51 +195,30 @@ function d_generer_tab_entities($entities, $id) {
                 $nb++;
 
                 if ($nb == 1) {
-
                     $indice_depart = $indice;
-
-                }
-
-                else {
-
+                } else {
                     $taille = $indice - $indice_depart;
-
                 }
-
             }
 
 
-
             $lien = 'https://twitter.com/hashtag/'.$hastag["text"];
-
             $affichage = '#'.$hastag["text"];
 
-            $donnees = array(
-
+            $donnees = [
                 'indice_depart' => $indice_depart,
-
                 'taille' => $taille,
-
                 'type' => 'hashtag',
-
                 'affichage' => $affichage,
-
                 'lien' => $lien,
-
-            );
-
-
+            ];
 
             $tab[] = $donnees;
-
         }
-
     }
 
 
-
     //symbols - todo maybe
-
 
 
     // Les mentions
@@ -253,13 +226,11 @@ function d_generer_tab_entities($entities, $id) {
     if (isset($entities["user_mentions"]) && sizeof($entities["user_mentions"])>0) {
 
         $user_mentions = $entities["user_mentions"];
-
         $t = 0;
 
         foreach ($user_mentions as $mention) {
 
             $t++;
-
             $nb = 0;
 
             foreach ($mention["indices"] as $indice) {
@@ -267,40 +238,24 @@ function d_generer_tab_entities($entities, $id) {
                 $nb++;
 
                 if ($nb == 1) {
-
                     $indice_depart = $indice;
-
-                }
-
-                else {
-
+                } else {
                     $taille = $indice - $indice_depart;
-
                 }
-
             }
-
 
 
             $lien = 'https://twitter.com/'.$mention["screen_name"];
 
             $affichage = '@'.$mention["screen_name"];
 
-            $donnees = array(
-
+            $donnees = [
                 'indice_depart' => $indice_depart,
-
                 'taille' => $taille,
-
                 'type' => 'mention',
-
                 'affichage' => $affichage,
-
                 'lien' => $lien,
-
-            );
-
-
+            ];
 
             $tab[] = $donnees;
 
@@ -315,13 +270,11 @@ function d_generer_tab_entities($entities, $id) {
     if (isset($entities["urls"]) && sizeof($entities["urls"])>0) {
 
         $urls = $entities["urls"];
-
         $t = 0;
 
         foreach ($urls as $url) {
 
             $t++;
-
             $nb = 0;
 
             foreach ($url["indices"] as $indice) {
@@ -329,40 +282,23 @@ function d_generer_tab_entities($entities, $id) {
                 $nb++;
 
                 if ($nb == 1) {
-
                     $indice_depart = $indice;
-
-                }
-
-                else {
-
+                } else {
                     $taille = $indice - $indice_depart;
-
                 }
-
             }
 
 
-
             $lien = $url["expanded_url"];
-
             $affichage = $url["display_url"];
 
-            $donnees = array(
-
+            $donnees = [
                 'indice_depart' => $indice_depart,
-
                 'taille' => $taille,
-
                 'type' => 'url',
-
                 'affichage' => $affichage,
-
                 'lien' => $lien,
-
-            );
-
-
+            ];
 
             $tab[] = $donnees;
 
@@ -377,9 +313,6 @@ function d_generer_tab_entities($entities, $id) {
     if (isset($entities["media"]) && sizeof($entities["media"])>0) {
 
 
-
-
-
         $medias = $entities["media"];
 
         $t = 0;
@@ -387,7 +320,6 @@ function d_generer_tab_entities($entities, $id) {
             foreach ($medias as $media) {
 
                 $t++;
-
                 $nb = 0;
 
             foreach ($media["indices"] as $indice) {
@@ -395,52 +327,31 @@ function d_generer_tab_entities($entities, $id) {
                 $nb++;
 
                 if ($nb == 1) {
-
                     $indice_depart = $indice;
-
-                }
-
-                else {
-
+                } else {
                     $taille = $indice - $indice_depart;
-
                 }
-
             }
 
 
-
             $lien = $media["expanded_url"];
-
             $affichage = $media["display_url"];
-
             $src = $media["media_url_https"];
 
-            $donnees = array(
-
+            $donnees = [
                 'indice_depart' => $indice_depart,
-
                 'taille' => $taille,
-
                 'type' => 'media',
-
                 'affichage' => $affichage,
-
                 'lien' => $lien,
-
                 'src' => $src,
-
-            );
-
-
+            ];
 
             $tab[] = $donnees;
 
         }
 
     }
-
-
 
     // on a récupéré tous les éléments
 
@@ -458,8 +369,6 @@ function d_ordonner_tableau($tab) {
 
     $tab_trie = array();
 
-
-
     $dernier_index_ajoute = -1;
 
 
@@ -469,13 +378,9 @@ function d_ordonner_tableau($tab) {
     while (sizeof($tab_trie) != sizeof($tab)){
 
 
-
         $index_plus_petit = 999999;
-
         $nb_entree = -1;
-
         $entree_a_ajouter = -1;
-
 
 
         // On parcourt le tableau pour chercher la prochaine entrée à ajouter au tableau trié
@@ -484,33 +389,21 @@ function d_ordonner_tableau($tab) {
 
             $nb_entree++;
 
-
-
             // Si c'est le plus petit parmis ceux déjà parcourru
 
             if ($entree['indice_depart'] < $index_plus_petit && $entree['indice_depart']>$dernier_index_ajoute) {
-
                 $index_plus_petit = $entree['indice_depart'];
-
                 $entree_a_ajouter = $nb_entree;
-
             }
-
         }
 
 
 
         if ($entree_a_ajouter > -1) {
-
             $tab_trie[] = $tab[$entree_a_ajouter];
-
             $dernier_index_ajoute = $index_plus_petit;
-
         }
-
     }
-
-
 
     return $tab_trie;
 
@@ -523,9 +416,7 @@ function d_ordonner_tableau($tab) {
 function d_construire_tweet($texte, $tab, $data) {
 
     $newtexte = $texte;
-
     $index_offset = 0;
-
 
 
     // en cas de tweet tronqué on compte le nombre d'url pour pour pouvoir retirer la dernière
@@ -533,87 +424,52 @@ function d_construire_tweet($texte, $tab, $data) {
     if ($data["truncated"] == 1) {
 
         $indexurl = 0;
-
         $nburl = 0;
 
         foreach ($tab as $inclusion) {
-
             if ($inclusion['type'] == 'url') {
-
                 $nburl++;
-
             }
-
         }
-
-
-
     }
 
     // on intégre les liens et autres dans le tweet
 
     foreach ($tab as $inclusion) {
-
         $index = $inclusion['indice_depart'] + $index_offset;
-
         $taille = $inclusion['taille'];
-
         $avant = mb_substr($newtexte, 0, $index);
-
         $element = mb_substr($newtexte, $index, $taille);
-
         $apres = mb_substr($newtexte, $index+$taille);
 
-
-
         // On modifie les éléments pour rajouter les liens et les classes
-
         $type = $inclusion['type'];
-
         $affichage = $inclusion['affichage'];
-
         $lien = $inclusion['lien'];
 
         $newelement = $element;
 
         switch ($type) {
-
              case 'hashtag':
-
                 $newelement = '<a class="'.$type.'" href="'.$lien.'" target="_blank">'.$affichage.'</a>';
-
                 break;
 
             case 'mention':
-
                 $rt = mb_substr($newtexte, $index-3, 2);
 
-
-
                 // Cas où le tweet est un RT sans commentaire
-
                 if ($rt == 'RT') {
 
-
-
                     // On retire le 'RT '
-
                     $avant = mb_substr($avant, 0, -3);
-
                     $index_offset = $index_offset - 3;
 
 
-
                     // Pour ajouter un message custom de retweet qui pourra éventuellement être traduit plus tard.
-
                     $newelement = 'a retweeté le post de ';
 
-                }
-
-                else {
-
+                } else {
                     $newelement = '';
-
                 }
 
                 $newelement = $newelement.'<a class="'.$type.'" href="'.$lien.'" target="_blank">'.$affichage.'</a>';
@@ -625,19 +481,11 @@ function d_construire_tweet($texte, $tab, $data) {
                 $newelement = '<a class="'.$type.'" href="'.$lien.'" target="_blank">'.$affichage.'</a>';
 
                 if ($data["truncated"] == 1) {
-
                     $indexurl++;
-
                     if ($indexurl == $nburl) {
-
                         // C'est le dernier lien d'un tweet tronqué qui est ajouté par défaut à la fin. On le supprime
-
                         $newelement = '';
-
                     }
-
-
-
                 }
 
                 break;
@@ -645,25 +493,19 @@ function d_construire_tweet($texte, $tab, $data) {
             case 'media':
 
                 $src = $inclusion['src'];
-
                 $newelement = '<div class="'.$type.'"><a href="'.$lien.'" target="_blank"><img src="'.$src.'" alt="'.$affichage.'"></a></div>';
-
                 break;
 
         }
 
-
-
         $index_offset = $index_offset + mb_strlen($newelement) - $taille;
-
         $newtexte = $avant.$newelement.$apres;
 
     }
 
-
     $newtexte = str_replace("J'ai ???? la vidéo", "J'ai aimé la vidéo", $newtexte);
     $newtexte = str_replace("J'ai 👍 la vidéo", "J'ai aimé la vidéo", $newtexte);
-    return $newtexte;
 
+    return $newtexte;
 }
 
