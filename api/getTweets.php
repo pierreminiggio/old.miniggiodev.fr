@@ -33,7 +33,7 @@ $tweets = array_map(
         )/*->where(
             ''
         )*/->orderBy(
-            'id'
+            'id_publication_source'
         )->limit(
             50
         )/*,
