@@ -15,14 +15,18 @@ $today = new DateTime();
 
 $offset = $_GET['offset'] ?? null;
 
-$query = $fetcher->createQuery(
-    'social__publication'
-)->select(
+$select = [
     'id_publication_source as status_id',
     'in_reply_to_status_id as in_reply_to_status_id',
     'texte_brut',
     'texte_html',
     'date_publication'
+];
+
+$query = $fetcher->createQuery(
+    'social__publication'
+)->select(
+    ...$select
 )->orderBy(
     'id_publication_source'
 )->limit(
@@ -35,16 +39,58 @@ if ($offset) {
     $queryParams['status_id'] = $offset;
 }
 
-$tweets = array_map(
-    fn (array $entry) => [
-        'status_id' => $entry['status_id'],
-        'in_reply_to_status_id' => $entry['in_reply_to_status_id'] === '' ? 'unknown' : (
-            $entry['in_reply_to_status_id'] ?? null
+$findTweet = function (string $statusId) use ($fetcher, $select): ?array {
+    $fetchedTweets = $fetcher->query(
+        $fetcher->createQuery(
+            'social__publication'
+        )->select(
+            ...$select
+        )->where(
+            'id_publication_source = :status_id'
+        )->limit(
+            1
         ),
+        ['status_id' => $statusId]
+    );
+
+    if (! $fetchedTweets) {
+        return null;
+    }
+
+    return $fetchedTweets[0];
+};
+
+function displayTweet(array $entry): array
+{
+    $inReplyToStatusId = $entry['in_reply_to_status_id'];
+
+    if ($inReplyToStatusId === '') {
+        $replies = 'unknown';
+    } else {
+        if ($inReplyToStatusId) {
+            global $findTweet;
+            $tweet = $findTweet($inReplyToStatusId);
+            if ($tweet) {
+                $replies = displayTweet($tweet);
+            } else {
+                $replies = $inReplyToStatusId;
+            }
+        } else {
+            $replies = null;
+        }
+    }
+    
+    return [
+        'status_id' => $entry['status_id'],
+        'replies' => $replies,
         'texte_brut' => $entry['texte_brut'],
         'texte_html' => $entry['texte_html'],
         'date_publication' => $entry['date_publication']
-    ],
+    ];
+};
+
+$tweets = array_map(
+    'displayTweet',
     $fetcher->query($query, $queryParams)
 );
 
