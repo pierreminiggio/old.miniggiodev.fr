@@ -7,7 +7,7 @@ function d_get_timeline_data($settings) {
         require_once('TwitterAPI.php');
 
         $url = 'https://api.twitter.com/1.1/statuses/user_timeline.json';
-        $getfield = '';
+        $getfield = 'tweet_mode=extended';
         $requestMethod = 'GET';
         $twitterjson = new TwitterAPI($settings);
         $string = $twitterjson
@@ -18,8 +18,6 @@ function d_get_timeline_data($settings) {
 
         return $string;
 }
-
-
 
 /**
  * Récupération de tous les posts d'un compte twitter
@@ -53,7 +51,7 @@ function d_insert_post($post, $idsrc){
     $id = $idsrc;
     $json = json_encode($post);
 
-    $texte_brut = $post['text'];
+    $texte_brut = $post['full_text'];
     // on va construire le $texte_html
 
     $date = $post["created_at"];
@@ -68,7 +66,7 @@ function d_insert_post($post, $idsrc){
     // On modifie le texte_brut APRES avoir créé l'html, pour ne pas fuck up les offsets
     $texte_brut = str_replace("J'ai ???? la vidéo", "J'ai aimé la vidéo", $texte_brut);
     $texte_brut = str_replace("J'ai 👍 la vidéo", "J'ai aimé la vidéo", $texte_brut);
-        
+
     // A qui le tweet répond
     $in_reply_to_status_id = $post['in_reply_to_status_id_str'] ?? null;
 
