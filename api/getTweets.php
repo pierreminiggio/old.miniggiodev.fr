@@ -67,7 +67,7 @@ function displayTweet(array $entry): array
     if ($inReplyToStatusId === '') {
         $replies = 'unknown';
     } else {
-        if ($inReplyToStatusId) {
+        if ($inReplyToStatusId && $inReplyToStatusId !== 'NULL') {
             global $findTweet;
             $tweet = $findTweet($inReplyToStatusId);
             if ($tweet) {
