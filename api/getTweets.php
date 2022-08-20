@@ -16,7 +16,9 @@ $today = new DateTime();
 $tweets = array_map(
     fn (array $entry) => [
         'status_id' => $entry['status_id'],
-        'in_reply_to_status_id' => $entry['in_reply_to_status_id'],
+        'in_reply_to_status_id' => $entry['in_reply_to_status_id'] === '' ? 'unknown' : (
+            $entry['in_reply_to_status_id'] ?? null
+        ),
         'texte_brut' => $entry['texte_brut'],
         'texte_html' => $entry['texte_html'],
         'date_publication' => $entry['date_publication']
