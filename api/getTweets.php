@@ -87,7 +87,7 @@ function displayTweet(array $entry): array
         'texte_html' => $entry['texte_html'],
         'date_publication' => $entry['date_publication']
     ];
-};
+}
 
 $tweets = array_map(
     'displayTweet',
