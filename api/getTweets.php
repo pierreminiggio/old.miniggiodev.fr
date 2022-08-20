@@ -65,24 +65,24 @@ function displayTweet(array $entry): array
     $inReplyToStatusId = $entry['in_reply_to_status_id'];
 
     if ($inReplyToStatusId === '') {
-        $replies = 'unknown';
+        $repliesTo = 'unknown';
     } else {
         if ($inReplyToStatusId && $inReplyToStatusId !== 'NULL') {
             global $findTweet;
             $tweet = $findTweet($inReplyToStatusId);
             if ($tweet) {
-                $replies = displayTweet($tweet);
+                $repliesTo = displayTweet($tweet);
             } else {
-                $replies = $inReplyToStatusId;
+                $repliesTo = $inReplyToStatusId;
             }
         } else {
-            $replies = null;
+            $repliesTo = null;
         }
     }
     
     return [
         'status_id' => $entry['status_id'],
-        'replies' => $replies,
+        'replies_to' => $repliesTo,
         'texte_brut' => $entry['texte_brut'],
         'texte_html' => $entry['texte_html'],
         'date_publication' => $entry['date_publication']
