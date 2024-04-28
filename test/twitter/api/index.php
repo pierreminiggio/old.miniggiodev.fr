@@ -1,12 +1,21 @@
 <?php
 
-require_once(__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'fonctions.php');
+use Abraham\TwitterOAuth\TwitterOAuth;
+
+$currentDirectory = __DIR__ . DIRECTORY_SEPARATOR;
+
+$version = 2;
+
+if ($version === 1) {
+    require_once($currentDirectory . '..' . DIRECTORY_SEPARATOR . 'fonctions.php');
+} elseif ($version === 2) {
+    require $currentDirectory . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
+}
 
 $authHeader = $_SERVER['HTTP_AUTHORIZATION'];
 
 $config = require
-    __DIR__
-    . DIRECTORY_SEPARATOR
+    $currentDirectory
     . '..'
     . DIRECTORY_SEPARATOR
     . '..'
@@ -31,14 +40,59 @@ if (empty($requestBody)) {
     exit;
 }
 
-$twitterResponse = json_decode(updateStatus($requestBody));
+if ($version === 1) {
+    $twitterResponse = json_decode(updateStatus($requestBody));
 
-if (! isset($twitterResponse->id)) {
-    http_response_code(500);
-    echo json_encode(['error' => isset($twitterResponse->errors) ? $twitterResponse->errors : 'Internal Error']);
+    if (! isset($twitterResponse->id)) {
+        http_response_code(500);
+        echo json_encode(['error' => isset($twitterResponse->errors) ? $twitterResponse->errors : 'Internal Error']);
+        exit;
+    }
+
+    http_response_code(200);
+    echo json_encode(['id' => $twitterResponse->id]);
+    exit;
+} elseif ($version === 2) {
+    $checkConfig = function (array $config, string $key): mixed {
+        if (! isset($config[$key])) {
+            http_response_code(500);
+            echo json_encode(['error' => 'Bad config : Missing "' . $key . '" key in config']);
+            exit;
+        }
+
+        return $config[$key];
+    };
+
+    $twitterApiConfig = $checkConfig($config, 'twitter-api');
+    $pierreMiniggioConfig = $checkConfig($twitterApiConfig, 'pierreminiggio');
+
+    $consumerKey = $checkConfig($pierreMiniggioConfig, 'consumer_key');
+    $consumerSecret = $checkConfig($pierreMiniggioConfig, 'consumer_secret');
+    $accessToken = $checkConfig($pierreMiniggioConfig, 'oauth_access_token');
+    $accessTokenSecret = $checkConfig($pierreMiniggioConfig, 'oauth_access_token_secret');
+
+    $twitter = new TwitterOAuth($consumerKey, $consumerSecret, $accessToken, $accessTokenSecret);
+    $twitter->setApiVersion('2');
+
+    $tweetParams = [
+        'text' => $requestBody
+    ];
+
+    $status = $twitter->post('tweets', $tweetParams);
+
+    if (! isset($status->data)) {
+        http_response_code(500);
+        echo json_encode(['error' => 'Missing "data" key in Twitter reponse']);
+        exit;
+    }
+
+    if (! isset($status->data->id)) {
+        http_response_code(500);
+        echo json_encode(['error' => 'Missing "id" key in Twitter reponse']);
+        exit;
+    }
+
+    http_response_code(200);
+    echo json_encode(['id' => $status->data->id]);
     exit;
 }
-
-http_response_code(200);
-echo json_encode(['id' => $twitterResponse->id]);
-exit;
