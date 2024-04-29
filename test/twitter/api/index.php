@@ -1,6 +1,6 @@
 <?php
 
-use Abraham\TwitterOAuth\TwitterOAuth;
+use PierreMiniggio\TwitterHelpers\TwitterPoster;
 
 $currentDirectory = __DIR__ . DIRECTORY_SEPARATOR;
 
@@ -71,28 +71,17 @@ if ($version === 1) {
     $accessToken = $checkConfig($pierreMiniggioConfig, 'oauth_access_token');
     $accessTokenSecret = $checkConfig($pierreMiniggioConfig, 'oauth_access_token_secret');
 
-    $twitter = new TwitterOAuth($consumerKey, $consumerSecret, $accessToken, $accessTokenSecret);
-    $twitter->setApiVersion('2');
+    $twitter = new TwitterPoster($accessToken, $accessTokenSecret, $consumerKey, $consumerSecret);
 
-    $tweetParams = [
-        'text' => $requestBody
-    ];
+    $status = json_decode($twitter->updateStatus($requestBody, TwitterPoster::VERSION_2));
 
-    $status = $twitter->post('tweets', $tweetParams);
-
-    if (! isset($status->data)) {
-        http_response_code(500);
-        echo json_encode(['error' => 'Missing "data" key in Twitter reponse']);
-        exit;
-    }
-
-    if (! isset($status->data->id)) {
+    if (! isset($status->id)) {
         http_response_code(500);
         echo json_encode(['error' => 'Missing "id" key in Twitter reponse']);
         exit;
     }
 
     http_response_code(200);
-    echo json_encode(['id' => $status->data->id]);
+    echo json_encode(['id' => $status->id]);
     exit;
 }

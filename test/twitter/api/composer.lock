@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "215d34b4e0fd204da59814c4b81020f9",
+    "content-hash": "39da32850a187c9fdf9968c3cebb35fc",
     "packages": [
         {
             "name": "abraham/twitteroauth",
@@ -143,6 +143,44 @@
                 }
             ],
             "time": "2024-03-15T14:00:32+00:00"
+        },
+        {
+            "name": "pierreminiggio/twitter-helpers",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pierreminiggio/twitter-helpers.git",
+                "reference": "6a75b060da9a8ee7d130c5c7c5c5027ebfbe83b0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pierreminiggio/twitter-helpers/zipball/6a75b060da9a8ee7d130c5c7c5c5027ebfbe83b0",
+                "reference": "6a75b060da9a8ee7d130c5c7c5c5027ebfbe83b0",
+                "shasum": ""
+            },
+            "require": {
+                "abraham/twitteroauth": "^7.0",
+                "php": "^7.4 || ^8.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PierreMiniggio\\TwitterHelpers\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Pierre MINIGGIO",
+                    "email": "pierre@miniggiodev.fr"
+                }
+            ],
+            "description": "A file from an old application that I could actually use again",
+            "support": {
+                "issues": "https://github.com/pierreminiggio/twitter-helpers/issues",
+                "source": "https://github.com/pierreminiggio/twitter-helpers/tree/1.1.0"
+            },
+            "time": "2024-04-29T04:55:33+00:00"
         }
     ],
     "packages-dev": [],
