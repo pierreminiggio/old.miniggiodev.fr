@@ -146,16 +146,16 @@
         },
         {
             "name": "pierreminiggio/twitter-helpers",
-            "version": "1.1.0",
+            "version": "1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pierreminiggio/twitter-helpers.git",
-                "reference": "6a75b060da9a8ee7d130c5c7c5c5027ebfbe83b0"
+                "reference": "e84bcc106c5b23641e0547bc6cb7c296e7d7116d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pierreminiggio/twitter-helpers/zipball/6a75b060da9a8ee7d130c5c7c5c5027ebfbe83b0",
-                "reference": "6a75b060da9a8ee7d130c5c7c5c5027ebfbe83b0",
+                "url": "https://api.github.com/repos/pierreminiggio/twitter-helpers/zipball/e84bcc106c5b23641e0547bc6cb7c296e7d7116d",
+                "reference": "e84bcc106c5b23641e0547bc6cb7c296e7d7116d",
                 "shasum": ""
             },
             "require": {
@@ -178,9 +178,9 @@
             "description": "A file from an old application that I could actually use again",
             "support": {
                 "issues": "https://github.com/pierreminiggio/twitter-helpers/issues",
-                "source": "https://github.com/pierreminiggio/twitter-helpers/tree/1.1.0"
+                "source": "https://github.com/pierreminiggio/twitter-helpers/tree/1.1.1"
             },
-            "time": "2024-04-29T04:55:33+00:00"
+            "time": "2024-04-29T08:19:41+00:00"
         }
     ],
     "packages-dev": [],
