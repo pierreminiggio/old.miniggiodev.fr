@@ -2,29 +2,45 @@
 
 // récupérer le json de la timeline d'un compte twitter
 
-function d_get_timeline_data($settings) {
+function d_get_timeline_data(array $settings, string $version): array
+{
+    require_once('TwitterAPI.php');
 
-        require_once('TwitterAPI.php');
+    $url = 'https://api.twitter.com/1.1/statuses/user_timeline.json';
+    $getfield = 'tweet_mode=extended';
+    $requestMethod = 'GET';
+    $twitterjson = new TwitterAPI($settings);
+    $string = $twitterjson
+        ->setGetfield($getfield)
+        ->buildOauth($url, $requestMethod)
+        ->performRequest()
+    ;
 
-        $url = 'https://api.twitter.com/1.1/statuses/user_timeline.json';
-        $getfield = 'tweet_mode=extended';
-        $requestMethod = 'GET';
-        $twitterjson = new TwitterAPI($settings);
-        $string = $twitterjson
-            ->setGetfield($getfield)
-            ->buildOauth($url, $requestMethod)
-            ->performRequest()
-        ;
+    $response = json_decode($string, true);
 
-        return $string;
+    if (isset($response['errors'])) {
+        $message = '';
+
+        foreach ($response['errors'] as $error) {
+            if ($message !== '') {
+                $message .= ', ';
+            }
+
+            $message .= $error['code'] . ' : ' . $error['message'];
+        }
+
+        throw new Exception($message);
+    }
+
+    return $response;
 }
 
 /**
  * Récupération de tous les posts d'un compte twitter
  */
 
-function d_get_posts()
-    {
+function d_get_posts(string $version = '1')
+{
     // SAME AS test/twitter/settings.php
     $config = require
         __DIR__
@@ -34,12 +50,13 @@ function d_get_posts()
         . 'config.php'
     ;
     $settings = $config['twitter-api']['pierreminiggio'];
-    $string = d_get_timeline_data($settings);
-    $tweets = json_decode($string, true);
+    $tweets = d_get_timeline_data($settings, $version);
 
-    foreach ($tweets as $tweet){
+    var_dump($tweets); die;
+
+    foreach ($tweets as $tweet) {
         $idsrc = $tweet['id_str'];
-        echo 'check du post : '.$idsrc.'<br>';
+        echo 'check du post : ' . $idsrc . '<br>';
         d_insert_post($tweet, $idsrc);
     }
 

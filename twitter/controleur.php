@@ -8,7 +8,9 @@ echo 'Recuperation des tweets en cours...<br>';
 
 require_once 'data.php';
 
-d_get_posts();
+$twitterApiVersion = '2';
+
+d_get_posts($twitterApiVersion);
 
 echo 'Tweets récupérés!';
 
