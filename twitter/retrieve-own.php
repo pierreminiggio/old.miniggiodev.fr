@@ -52,14 +52,17 @@ $result = Utils::querySQL($sql, $conn);
 $counter = 0;
 
 foreach ($result->fetchAll() as $entry) {
-    var_dump($entry); die;
+    $since_id = $entry['id_publication_source'];
+    $afterDate = $entry['date_publication'];
+    break;
 }
 
-var_dump('test'); die;
+if (empty($since_id) || empty($afterDate)) {
+    echo 'Need sinceId and afterDate values to run the script';
+    die;
+}
 
 $username = 'PierreMiniggio'; // Without @
-$since_id = '1679161358615556096';
-$afterDate = '2023-07-12 16:10:39';
 
 function handleRateLimitMessage($lastSavedAt = null) {
     echo "\nℹ️ Too Many Requests. Please wait ~15 minutes.\n";
