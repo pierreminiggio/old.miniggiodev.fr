@@ -33,6 +33,9 @@ class Utils
 
     static function querySQL($sql, $conn)
     {
+        if ($conn == null) {
+            throw new Exception("Connexion à la base de données non établie");
+        }
         try {
             $result = $conn->query($sql);
             return $result;
@@ -45,6 +48,9 @@ class Utils
 
     static function execSQL($sql, $conn)
     {
+        if ($conn == null) {
+            throw new Exception("Connexion à la base de données non établie");
+        }
         try {
             $conn->exec($sql);
         } catch (PDOException $ex) {
