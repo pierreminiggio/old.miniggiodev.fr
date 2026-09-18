@@ -1,6 +1,6 @@
 ﻿<?php include './chat.inc.php'; ?>
 Je suis Pierre Miniggio, actuellement Développeur Web à Toulouse. Je suis quelqu'un de curieux et qui aime apprendre un peu dans tous les domaines. Sur ce site vous pouvez trouver une partie de mes réalisations.<br>
-<br><br><a href="docs/cv-Pierre-Miniggio.pdf" target="_blank" class="cv waves-effect waves-light fleche btn">Obtenir mon CV en document PDF</a><div><img src="images/feu.gif"></div>
+<br><br><a href="https://miniggiodev.fr/cv" target="_blank" class="cv waves-effect waves-light fleche btn">Obtenir mon CV en document PDF</a><div><img src="images/feu.gif"></div>
 <?php include './chat2.inc.php'; ?>
 
 <div class="row res" id="contact">
