@@ -19,7 +19,7 @@
             <div class="container">
                 <span class="hide-on-med-and-down">Site développé par Miniggio Pierre à partir de fin 2017</span>
                 <span class="hide-on-large-only" id="nom-footer">Miniggio Pierre 2017</span>
-            <a class="white-text right waves-effect waves-light btn orange darken-4" href="index.php?onglet=quisuisje&contact=active#contact">
+            <a class="white-text right waves-effect waves-light btn orange darken-4" href="index.php?onglet=quisuisje#contact">
                 <span class="hide-on-med-and-down fleche">Me contacter</span>
                 <span class="hide-on-large-only fleche">Contact</span>
             </a>

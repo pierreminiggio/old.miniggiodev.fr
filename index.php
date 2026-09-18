@@ -12,7 +12,7 @@ $photo = "images/photo-pierre-miniggio.png";
         <meta property="og:description" content="Développeur Web, Video Maker, Musicien!">
         <title><?=$page_title?></title>
     </head>
-    <body<?=$onloadbody?>>
+    <body>
     <a
         href="https://miniggiodev.fr"
         target="_blank"

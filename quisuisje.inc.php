@@ -26,53 +26,8 @@ Je suis Pierre Miniggio, actuellement Développeur Web à Toulouse. Je suis quel
 
 <div class="row">
     <div class="col s12 m10 offset-m1 l8 offset-l2">
-<ul class="collapsible popout" data-collapsible="accordion">
-  <li>
-    <div class="collapsible-header<?=$contactactive?>">
-        <span class="hide-on-large-only">F</span><span class="hide-on-med-and-down">Accéder au f</span>ormulaire de contact :
+        <a href="https://miniggiodev.fr/contact" target="_blank" class="cv waves-effect waves-light fleche btn"><span class="hide-on-large-only">F</span><span class="hide-on-med-and-down">Accéder au f</span>ormulaire de contact :</a>
     </div>
-      <div class="collapsible-body">
-          <form action="contact.php" method="POST">
-
-            <div class="row">
-
-                <div class="input-field col s12 m6 l6">
-                    <input id="nom" name="nom" type="text" class="validate" required>
-                    <label for="last_name">Nom & Prénom *</label>
-                </div>
-
-                <div class="input-field col s12 m6 l6">
-                    <input id="email" name="email" type="email" class="validate" required>
-                    <label for="email">E-mail *</label>
-                </div>
-
-           </div>
-
-           <div class="row">
-
-                <div class="input-field col s12 m12 l12">
-                    <input id="objet" name="objet" type="text" class="validate">
-                    <label for="objet">Objet</label>
-                </div>
-
-           </div>
-
-            <div class="row">
-
-                <div class="input-field col s12 m12 l12">
-                    <textarea id="message" name="message" class="materialize-textarea"></textarea>
-                    <label for="message">Message *</label>
-                </div>
-
-                <input class="col s12 m6 offset-m3 l4 offset-l4 waves-effect waves-light fleche btn" type="submit" id="envoyer" name="Envoyer" value="Envoyer">
-
-            </div>
-
-        </form>
-    </div>
-  </li>
-</ul>
-        </div>
 </div>
 
 <div class="row">
