@@ -7,7 +7,7 @@ $photo = "images/photo-pierre-miniggio.png";
     <head>
         <?php include './head.inc.php'; ?>
         <meta charset="UTF-8">
-        <meta property="og:image" content="https://miniggiodev.fr/images/logo.png">
+        <meta property="og:image" content="https://old.miniggiodev.fr/images/logo.png">
         <meta property="og:site_name" content="Pierre Miniggio">
         <meta property="og:description" content="Développeur Web, Video Maker, Musicien!">
         <title><?=$page_title?></title>
