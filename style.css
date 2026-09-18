@@ -544,7 +544,7 @@ h6 {
 .cPhp+span:hover:after {
     display: block;
     font-size: 50%;
-    content: "\A \A0 Grâce au PHP je peux regrouper mon code générique que j'ai besoin à plusieurs endrois de la page, comme les liens du menu de navigation de ce site. De plus il me permet d'ajouter des fonctionnalités intéressantes à mes applications, comme par exemple avec ce formulaire de contact!";
+    content: "\A \A0 Grâce au PHP je peux regrouper mon code générique que j'ai besoin à plusieurs endrois de la page, comme les liens du menu de navigation de ce site. De plus il me permet d'ajouter des fonctionnalités intéressantes à mes applications, comme par exemple avec ce formulaire de contact ! (EDIT 19/09/2026 : Je l\'ai retiré pour mettre un lien vers le formulaire de contact du nouveau site)";
 }
 
 .cMysql {
