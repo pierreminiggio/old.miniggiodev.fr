@@ -25,7 +25,7 @@ Je suis Pierre Miniggio, actuellement Développeur Web à Toulouse. Je suis quel
 </div>
 
 <div class="row">
-    <div class="col s12 m10 offset-m1 l8 offset-l2">
+    <div class="col s12 center">
         <a href="https://miniggiodev.fr/contact" target="_blank" class="cv waves-effect waves-light fleche btn"><span class="hide-on-large-only">F</span><span class="hide-on-med-and-down">Accéder au f</span>ormulaire de contact :</a>
     </div>
 </div>
