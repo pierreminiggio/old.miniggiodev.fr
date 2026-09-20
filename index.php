@@ -24,7 +24,7 @@ $photo = "images/photo-pierre-miniggio.png";
             text-align: center;
             z-index: 2;
         "
-    >Ce site n'est plus mis à jour depuis 2018, accédez au nouveeau site en cliquant ici</a>
+    >Ce site n'est plus mis à jour depuis 2018, accédez au nouveau site en cliquant ici</a>
         <div class="fond-onglet fond-<?=$onglet?>">
         <div id="mobile-pres" class="hide-on-large-only">
             <h1>Pierre Miniggio</h1>
